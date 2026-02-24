@@ -875,3 +875,14 @@
   input, button, select, textarea { font-size: 16px; }
   body { -webkit-text-size-adjust: 100%; }
 }
+
+/* ===== ANTI-ZOOM / OVERFLOW PREVENTION ===== */
+html {
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+}
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  touch-action: manipulation;
+}

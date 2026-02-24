@@ -26,8 +26,11 @@
         font-family: 'Inter', sans-serif;
         margin: 0 0 16px;
         text-align: center;
-        max-width: 400px;
+        max-width: 90vw;
         line-height: 1.5;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .rfb-loader-overlay .rfb-loader-track {
         width: 80%;
@@ -65,7 +68,12 @@
             margin-bottom: 16px !important;
         }
         .rfb-loader-overlay .rfb-loader-text {
-            font-size: 13px;
+            font-size: 12px;
+        }
+    }
+    @media (max-width: 360px) {
+        .rfb-loader-overlay .rfb-loader-text {
+            font-size: 11px;
         }
     }
 </style>
