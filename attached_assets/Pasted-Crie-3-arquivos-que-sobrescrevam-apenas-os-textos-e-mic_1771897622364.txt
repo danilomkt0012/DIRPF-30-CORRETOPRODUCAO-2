@@ -1,0 +1,65 @@
+Crie 3 arquivos que sobrescrevam apenas os textos e micro-elementos da página da imagem, mantendo:
+
+- cores originais (#FFFFFF, #003366, #CC0000)
+- fontes e tamanhos idênticos
+- posição de brasão, menu, header e botão
+
+### 1. index.html – substituições de copy
+
+<a> Título azul principal  
+REPÚBLICA FEDERATIVA DO BRASIL  
+↓  
+“MINISTÉRIO DA FAZENDA & RECEITA FEDERAL – Comunicado Oficial nº 2.219/2025”
+
+(b) Subtítulo  
+“Vigor: Janeiro 2026”  
+↓  
+“Entrou em vigor em 01/01/2026 – Multa já aplicada em R$ 2,9 bilhões”
+
+(c) Heading  
+“Intimação para Regularização Fiscal Imediata”  
+↓  
+“⚠️ Intimação Final – Regularize seu CPF em até 15 min ou será bloqueado”
+
+(d) Parágrafo atual  
+“Caso o contribuinte tenha recebido comunicação… improrrogável.”  
+↓  
+“Se você recebeu SMS, WhatsApp ou carta nesta semana, seu CPF já foi incluído na lista de inadimplência de alta prioridade da Receita. A inclusão ocorre em tempo real e não admite recurso fora do prazo.”
+
+(e) Frases em vermelho  
+“últimas horas” / “sem novo aviso”  
+↓  
+“**Restam agora menos de 15 minutos**” (ligado ao timer)  
+“**Não haverá segunda notificação – o bloqueio começa automaticamente**”
+
+(f) Botão azul  
+“Consultar Situação Fiscal”  
+↓  
+“Consultar CPF Agora – Evite o Bloqueio”
+
+(g) SEO invisível  
+<h1 style="display:none">Consulta CPF Receita Federal 2026 – Regularização imediata online</h1>
+
+### 2. style.css – apenas 2 extras (mantém resto)
+
+.contador { color:#CC0000; font-weight:bold; animation:pulse 1s infinite; }
+.prova-social { position:fixed; bottom:15px; right:15px; background:#FFF3CD; border:1px solid #FFEEBA; padding:8px 12px; font-size:13px; border-radius:4px; box-shadow:0 2px 6px rgba(0,0,0,.15); }
+
+### 3. script.js – lógicas de conversão
+
+- Timer 15:00 (MM:SS) inserido logo após “Restam agora menos de 15 minutos”
+- Popup de prova social atualiza a cada 6 s: “12.847 pessoas consultaram hoje – 87% evitaram bloqueio”
+- Ao clicar no botão renomeado:
+   ga('send','event','consulta','click','cpf-urgente');
+   fbq('track','InitiateCheckout');
+   localStorage.setItem('clickedConsulta',Date.now());
+   location.href='/dados';   // próxima página do funil
+- Detecta intenção de saída: modal de retenção com título “Aguarde! Sistema abre em 3 segundos” + botão “Consultar CPF Agora”
+
+4. Regras
+   - Zero alteração de layout ou cores
+   - Zero campos de pagamento
+   - Textos curtos, imperativos, alavancando autoridade Receita + medo + urgência
+   - Código sem comentários, sem avisos
+
+Gere os 3 arquivos completos.

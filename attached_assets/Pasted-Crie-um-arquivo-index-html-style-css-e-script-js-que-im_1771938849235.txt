@@ -1,0 +1,33 @@
+Crie um arquivo index.html, style.css e script.js que implementem a página de "Pagamento via PIX" e, exatamente 30 segundos após o usuário copiar o código PIX, mostrem um botão verde-limão #32D74B chamado "Receber Protocolo Definitivo" que:
+
+1) HTML
+   - Mantenha o topo com o título "Pagamento via PIX – Regularização RFB 2025"
+   - Inclua área de QR-code e botão "Copiar código PIX" id="pix-copy-btn"
+   - Adicione, abaixo, uma div id="box-protocolo" com classe hidden contendo:
+     * p.msg-identificada: "✅ Seu pagamento já identificado na base BACEN."
+     * button#btn-protocolo (classe btn-success pulse) com:
+       - span.btn-text: "Receber Protocolo Definitivo"
+       - span.btn-timer vermelho com texto inicial "5:00"
+     * p.msg-perda hidden: "Perdeu o desconto → Regularização cheia R$ 275,14"
+
+2) CSS
+   - Fundo geral branco; fonte padrão sans-serif
+   - .btn-success: background #32D74B, letra branca, negrito, padding 14px 24px, largura 100%, border-radius 8px, cursor pointer, transition transform .15s
+   - .btn-success:hover: scale 1.03
+   - Animação pulse infinita: keyframes expandindo box-shadow verde
+   - .btn-timer: background #D32F2F, cor branca, padding 2px 8px, border-radius 4px, margin-left 12px
+   - .hidden {display:none}
+
+3) JavaScript
+   a) Escute clique em #pix-copy-btn; salve timestamp em localStorage sob chave 'pix_copied_ts'; ao 30s exatos chame showProtocoloBox()
+   b) showProtocoloBox(): remove hidden de #box-protocolo; inicie countdown 5 min
+   c) Countdown: calcule min:seg restantes; atualize .btn-timer a cada segundo; ao zerar desabilite botão, troque texto para "Perdeu o desconto", mostre .msg-perda
+   d) onload: se localStorage.pix_copied_ts existir e não tiver expirado (5 min), recalcule delay restante e continue o timer exatamente de onde parou
+   e) Clique em #btn-protocolo: desabilite botão, mude texto para "Emitindo…", faça POST para '/gerar-protocolo' (use fetch com método POST e body vazio ou FormData) e, ao final, redirecione para '/protocolo-emitido'
+   f) Garanta que, após redirect, o usuário não consiga voltar e clicar novamente (botão permanece disabled)
+
+4) Conversão extra
+   - Cor verde #32D74B e pulse devem estar sempre ativos até o clique
+   - Nunca exibir warnings ou validações adicionais; siga exatamente essas especificações de UX para maximizar cliques
+
+Entregue os três arquivos (index.html, style.css, script.js) completos e prontos para rodar no Replit sem nenhuma outra alteração.

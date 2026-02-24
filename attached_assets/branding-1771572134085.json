@@ -1,0 +1,148 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "Rawline",
+      "role": "unknown"
+    }
+  ],
+  "colors": {
+    "primary": "#0C326F",
+    "accent": "#1351B4",
+    "background": "#FFFFFF",
+    "textPrimary": "#1351B4",
+    "link": "#1351B4"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Rawline",
+      "heading": "Rawline"
+    },
+    "fontStacks": {
+      "heading": [
+        "Rawline",
+        "helvetica",
+        "arial",
+        "sans-serif"
+      ],
+      "body": [
+        "Rawline",
+        "helvetica",
+        "arial",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "Rawline",
+        "helvetica",
+        "arial",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "36px",
+      "h2": "36px",
+      "body": "14px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "8px"
+  },
+  "components": {
+    "input": {
+      "background": "transparent",
+      "textColor": "#262627",
+      "borderColor": null,
+      "borderRadius": "0px",
+      "borderRadiusCorners": {
+        "topLeft": "0px",
+        "topRight": "0px",
+        "bottomRight": "0px",
+        "bottomLeft": "0px"
+      },
+      "shadow": "none"
+    },
+    "buttonPrimary": {
+      "background": "#1351B4",
+      "textColor": "#007AFF",
+      "borderColor": "#1351B4",
+      "borderRadius": "0px",
+      "borderRadiusCorners": {
+        "topLeft": "0px",
+        "topRight": "0px",
+        "bottomRight": "0px",
+        "bottomLeft": "0px"
+      },
+      "shadow": "none"
+    },
+    "buttonSecondary": {
+      "background": "transparent",
+      "textColor": "#FFFFFF",
+      "borderColor": "#FFFFFF",
+      "borderRadius": "41px",
+      "borderRadiusCorners": {
+        "topLeft": "41px",
+        "topRight": "41px",
+        "bottomRight": "41px",
+        "bottomLeft": "41px"
+      },
+      "shadow": "none"
+    }
+  },
+  "images": {
+    "logo": "File saved at: attached_assets/logo.webp",
+    "favicon": "https://www.gov.br/++theme++padrao_govbr/favicons/apple-touch-icon.png",
+    "ogImage": "https://www.gov.br/logo.png",
+    "logoHref": "https://www.gov.br/pt-br",
+    "logoAlt": "Logomarca GovBR"
+  },
+  "__llm_logo_reasoning": {
+    "selectedIndex": 0,
+    "reasoning": "Selected #0 because it is visible, located in the header, and matches the brand name 'GovBR' from the page title and URL. It is the most prominent logo representing the brand.",
+    "confidence": 0.95,
+    "source": "llm"
+  },
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": 3,
+      "text": "Próximo",
+      "reasoning": "Button #3 has a vibrant blue background (#1351B4), which is a strong indicator of a primary CTA. The text 'Próximo' suggests a forward action, aligning with typical primary CTA functions."
+    },
+    "secondary": {
+      "index": 5,
+      "text": "Mais Indicadores",
+      "reasoning": "Button #5 has a transparent background, making it suitable as a secondary button. It contrasts with the primary button's vibrant color, fulfilling the requirement for different color groups."
+    },
+    "confidence": 0.9
+  },
+  "personality": {
+    "tone": "professional",
+    "energy": "medium",
+    "targetAudience": "Brazilian citizens seeking government services"
+  },
+  "designSystem": {
+    "framework": "bootstrap",
+    "componentLibrary": ""
+  },
+  "confidence": {
+    "buttons": 0.9,
+    "colors": 0.9,
+    "overall": 0.9
+  },
+  "__llm_metadata": {
+    "logoSelection": {
+      "llmCalled": true,
+      "llmSucceeded": true,
+      "finalSource": "llm",
+      "rawLogoSelection": {
+        "selectedLogoIndex": 0,
+        "selectedLogoReasoning": "Selected #0 because it is visible, located in the header, and matches the brand name 'GovBR' from the page title and URL. It is the most prominent logo representing the brand.",
+        "confidence": 0.95
+      }
+    },
+    "buttonClassification": {
+      "llmCalled": true,
+      "llmSucceeded": true
+    }
+  }
+}

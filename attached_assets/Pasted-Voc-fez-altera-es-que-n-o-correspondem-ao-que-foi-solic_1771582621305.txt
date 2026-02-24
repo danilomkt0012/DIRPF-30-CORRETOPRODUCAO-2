@@ -1,0 +1,133 @@
+Você fez alterações que não correspondem ao que foi solicitado.
+
+🚨 Ação imediata
+
+Reverta todas as modificações recentes feitas fora do escopo.
+
+Restaure o comportamento original das páginas que não deveriam ter sido alteradas.
+
+Especialmente:
+
+checkout.html
+
+gateway
+
+qualquer fluxo de PIX
+
+qualquer página que não seja a inicial
+
+⚠️ A página correta para ajuste é APENAS a página de consulta de CPF (página inicial).
+
+🎯 Escopo correto (o que você deve fazer agora)
+
+Trabalhar somente na seção flutuante:
+
+"Consulta de Regularização Fiscal"
+
+na página inicial, E NÃO A PAGINA /01101101105.
+
+✅ Problema a resolver
+
+Hoje ocorre este efeito visual incorreto:
+
+aparece barra de carregamento
+
+depois aparece a logo
+
+depois textos
+
+depois cabeçalho
+
+depois rodapé
+
+Isso gera carregamento feio e não profissional.
+
+🎯 Objetivo visual
+
+Quero comportamento profissional padrão institucional:
+
+1️⃣ Header e Footer
+
+Devem aparecer instantaneamente
+
+Não podem piscar
+
+Não podem carregar depois
+
+Não podem sofrer delay visual
+
+2️⃣ Ao clicar no botão
+
+"Consultar Situação Fiscal"
+
+Comportamento esperado:
+
+IMEDIATO ao clique:
+
+botão entra em estado de loading profissional
+
+conteúdo central (entre header e footer) desaparece suavemente
+
+aparece tela de carregamento limpa e institucional
+
+header e footer permanecem visíveis e estáveis
+
+3️⃣ Durante o redirecionamento
+
+A experiência deve ser:
+
+fluida
+
+sem flicker
+
+sem quebra visual
+
+sem mostrar elementos carregando fora de ordem
+
+seguindo padrão visual oficial
+
+❌ NÃO FAZER
+
+não mexer na checkout
+
+não mexer no gateway
+
+não mexer no PIX
+
+não alterar outras páginas
+
+não adicionar loaders globais no topo do body
+
+não quebrar responsividade
+
+⚙️ Requisitos técnicos
+
+usar CSS limpo (evitar inline excessivo)
+
+manter performance
+
+evitar layout shift
+
+manter compatibilidade mobile
+
+código organizado e reutilizável
+
+📦 Entrega esperada
+
+Ao finalizar, me informe:
+
+quais arquivos foram revertidos
+
+quais arquivos foram alterados agora
+
+como o loading do botão foi implementado
+
+como o conteúdo central é ocultado
+
+confirmação de que header e footer ficam instantâneos
+
+confirmação de que não há flicker
+
+💎 Resultado esperado
+
+Experiência visual nível institucional profissional, com transição suave e sem carregamento desordenado.

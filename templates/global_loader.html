@@ -1,0 +1,145 @@
+<style>
+    .rfb-loader-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: #fff;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        min-height: 100vh;
+    }
+    .rfb-loader-overlay.active {
+        display: flex;
+    }
+    .rfb-loader-overlay img {
+        width: 120px;
+        margin-bottom: 24px;
+        opacity: 0.9;
+    }
+    .rfb-loader-overlay .rfb-loader-text {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        font-family: 'Inter', sans-serif;
+        margin: 0 0 16px;
+        text-align: center;
+        max-width: 400px;
+        line-height: 1.5;
+    }
+    .rfb-loader-overlay .rfb-loader-track {
+        width: 80%;
+        max-width: 360px;
+        height: 8px;
+        background: #e0e0e0;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .rfb-loader-overlay .rfb-loader-bar {
+        height: 100%;
+        background: #1351B4;
+        width: 0%;
+        border-radius: 4px;
+        transition: width 0.1s linear;
+    }
+    .rfb-loader-overlay .rfb-loader-percent {
+        font-size: 13px;
+        color: #1351B4;
+        font-weight: 600;
+        margin-top: 8px;
+    }
+    @media (max-width: 640px) {
+        .rfb-loader-overlay img {
+            width: 100px !important;
+            margin-bottom: 20px !important;
+        }
+    }
+    @media (max-width: 480px) {
+        .rfb-loader-overlay {
+            padding: 16px;
+        }
+        .rfb-loader-overlay img {
+            width: 80px !important;
+            margin-bottom: 16px !important;
+        }
+        .rfb-loader-overlay .rfb-loader-text {
+            font-size: 13px;
+        }
+    }
+</style>
+<script>
+function rfbShowLoader(id, text) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var t = el.querySelector('.rfb-loader-text');
+    var bar = el.querySelector('.rfb-loader-bar');
+    var pct = el.querySelector('.rfb-loader-percent');
+    if (t && text) t.textContent = text;
+    if (bar) { bar.style.width = '0%'; bar.style.background = '#1351B4'; }
+    if (pct) pct.textContent = '0%';
+    if (t) t.style.color = '#333';
+    el.style.display = 'flex';
+}
+
+function rfbAnimateLoader(id, steps, duration, onComplete) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var t = el.querySelector('.rfb-loader-text');
+    var bar = el.querySelector('.rfb-loader-bar');
+    var pct = el.querySelector('.rfb-loader-percent');
+    var progress = 0;
+    var target = 95;
+    var stepIdx = 0;
+    var startTime = Date.now();
+
+    function tick() {
+        var elapsed = Date.now() - startTime;
+        var ratio = Math.min(elapsed / duration, 1);
+        progress = ratio * target;
+        if (progress > target) progress = target;
+        bar.style.width = Math.round(progress) + '%';
+        pct.textContent = Math.round(progress) + '%';
+
+        if (stepIdx < steps.length && progress >= steps[stepIdx].at) {
+            t.textContent = steps[stepIdx].text;
+            if (steps[stepIdx].color) t.style.color = steps[stepIdx].color;
+            stepIdx++;
+        }
+
+        if (ratio < 1) {
+            requestAnimationFrame(tick);
+        } else {
+            bar.style.width = '100%';
+            pct.textContent = '100%';
+            if (onComplete) onComplete(t, bar, pct);
+        }
+    }
+    tick();
+}
+
+function rfbHideLoader(id, cb) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.style.transition = 'opacity 0.5s ease';
+    el.style.opacity = '0';
+    setTimeout(function() {
+        el.style.display = 'none';
+        el.style.opacity = '1';
+        el.style.transition = '';
+        if (cb) cb();
+    }, 500);
+}
+
+function rfbTransition(id, text, steps, duration, url) {
+    rfbShowLoader(id, text);
+    rfbAnimateLoader(id, steps, duration, function(t) {
+        t.textContent = steps.length > 0 ? steps[steps.length - 1].text : text;
+        if (steps.length > 0 && steps[steps.length - 1].color) t.style.color = steps[steps.length - 1].color;
+        setTimeout(function() {
+            window.location.href = url;
+        }, 400);
+    });
+}
+</script>

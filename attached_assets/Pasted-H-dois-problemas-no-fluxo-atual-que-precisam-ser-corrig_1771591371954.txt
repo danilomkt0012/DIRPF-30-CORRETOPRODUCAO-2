@@ -1,0 +1,146 @@
+Há dois problemas no fluxo atual que precisam ser corrigidos com precisão.
+
+🚨 PROBLEMA 1 — Taxa aparecendo antes da hora
+
+A Taxa de Administração (R$ 27,90) está sendo exibida no momento errado.
+
+✅ Comportamento correto (obrigatório)
+
+A taxa NÃO deve aparecer no primeiro pagamento.
+
+Ela só pode aparecer na segunda etapa, em um destes cenários:
+
+Cenário A — após confirmação de pagamento
+
+quando o primeiro pagamento estiver com status pago
+
+OU
+
+Cenário B — após ação explícita do usuário
+
+quando o usuário clicar no botão para prosseguir com a regularização
+
+⚠️ Antes disso, a taxa não pode existir na tela nem ser gerada.
+
+❌ Corrigir imediatamente
+
+remover a taxa do primeiro fluxo
+
+impedir geração antecipada do PIX da taxa
+
+impedir renderização precoce
+
+garantir que o primeiro pagamento continue normal
+
+🔒 Controle obrigatório
+
+Implemente uma verificação clara de estado, por exemplo:
+
+status do primeiro pagamento
+
+flag de etapa
+
+ou parâmetro de fluxo
+
+A taxa só pode ser habilitada quando a condição for verdadeira.
+
+🚨 PROBLEMA 2 — Botão não redireciona para checkout padrão
+
+Atualmente, ao clicar para emitir a taxa, não está usando o checkout padrão do projeto.
+
+🎯 Comportamento obrigatório
+
+O botão da taxa deve:
+
+reutilizar o MESMO fluxo de checkout já existente
+
+redirecionar corretamente
+
+gerar automaticamente o PIX
+
+exibir normalmente:
+
+QR Code
+
+código copia e cola
+
+layout padrão do projeto
+
+⚠️ NÃO criar checkout novo.
+⚠️ NÃO duplicar lógica.
+
+✅ O que você deve fazer
+
+Identificar como os outros pagamentos redirecionam para o checkout
+
+Reutilizar exatamente a mesma função ou rota
+
+Garantir envio correto dos parâmetros:
+
+valor: 27,90
+
+nome (se aplicável)
+
+CPF (se aplicável)
+
+contexto atualizado
+
+Garantir geração automática do PIX ao carregar o checkout
+
+Garantir transição sem tela branca
+
+🔍 Validações obrigatórias
+
+Verificar:
+
+função de navegação está sendo chamada
+
+rota está correta
+
+parâmetros chegam ao checkout
+
+PIX é gerado
+
+QR Code aparece
+
+copia e cola aparece
+
+nenhum erro no console
+
+⚙️ Requisitos técnicos
+
+não quebrar fluxo existente
+
+não duplicar checkout
+
+manter header/footer estáveis
+
+manter UX fluida
+
+evitar flicker
+
+manter responsividade
+
+evitar múltiplas gerações de PIX
+
+📦 Entrega esperada
+
+Ao finalizar, informe:
+
+onde estava o erro da taxa
+
+qual condição controla a exibição
+
+qual função/rota de checkout foi reutilizada
+
+arquivos alterados
+
+confirmação de que o primeiro pagamento permanece normal
+
+confirmação de que a taxa só aparece na segunda etapa
+
+confirmação de que o checkout mostra QR Code
+
+confirmação de que mostra copia e cola
+
+confirmação de que não há tela branca

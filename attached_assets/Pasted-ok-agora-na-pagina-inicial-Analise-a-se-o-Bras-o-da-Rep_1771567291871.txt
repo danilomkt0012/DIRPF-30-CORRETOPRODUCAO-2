@@ -1,0 +1,106 @@
+ok, agora na pagina inicial Analise a seção "Brasão da República
+Normativa (IN) RFB nº 2.219/2025
+Vigor: Janeiro 2026
+
+BACEN (Banco Central do Brasil) e-Financeira - Monitoramento sobre transações PIX e Cartões de Crédito." da página inicial e aplique um redesign visual para que ela pareça uma folha de documento flutuando sobre a página.
+
+🎯 Objetivo visual
+
+Quero que a seção transmita a sensação de:
+
+uma folha oficial
+
+elevada (floating card)
+
+limpa e institucional
+
+com profundidade suave
+
+mantendo o padrão visual do projeto
+
+✅ Ajustes obrigatórios
+
+1. Estrutura visual
+
+A área da seção deve manter a cor atual de fundo.
+
+Dentro dela, o conteúdo principal deve virar um card branco.
+
+Esse card deve parecer uma folha de documento sobreposta.
+
+2. Efeito de flutuação
+
+Implemente no card:
+
+fundo branco (#ffffff)
+
+borda sutil
+
+cantos levemente arredondados
+
+sombra suave e realista
+
+sensação clara de elevação da página
+
+3. Fundo abaixo da seção
+
+A área abaixo do card deve permanecer na cor padrão do projeto.
+
+Deve haver contraste claro entre:
+
+fundo da seção
+
+folha branca flutuante
+
+4. Micro-interação (importante)
+
+Adicionar hover suave no card:
+
+leve translateY(-3px ou -4px)
+
+aumento sutil da sombra
+
+animação suave (ease padrão moderna)
+
+5. Responsividade
+
+Garantir que:
+
+no mobile o card fique centralizado
+
+tenha padding lateral adequado
+
+não encoste nas bordas
+
+mantenha proporção de “folha”
+
+⚠️ Requisitos técnicos
+
+NÃO alterar o conteúdo textual
+
+NÃO quebrar o layout existente
+
+Evitar estilos inline excessivos
+
+Criar classe reutilizável (ex: .document-floating-section)
+
+Manter performance e compatibilidade mobile
+
+Seguir o padrão visual institucional já existente
+
+📦 Entrega esperada
+
+Ao finalizar, me mostre:
+
+qual classe CSS foi criada
+
+onde foi aplicada
+
+quais arquivos foram alterados
+
+confirmação de que está responsivo
+
+confirmação de que o efeito floating está visualmente correto
+
+💡 Resultado esperado:
+A seção deve parecer um documento oficial impresso apoiado sobre a página, com aparência moderna e institucional (nível gov.br).

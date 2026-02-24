@@ -1,0 +1,101 @@
+Seu dropdown: cinza qualquer, parece #555555.
+Gov.br 2026: #4B4B4B (cinza charcoal, 0 % de opacidade extra).
+background-color: #4B4B4B;
+
+2. Fonte dos itens
+Família: font-family: "Rawlinson", "Times New Roman", serif;
+Peso: 500 (meio-negrito)
+Tamanho: 14 px
+Cor: #FFFFFF (branco puro)
+Altura da linha: 1.35 rem para centralizar verticalmente.
+
+3. Espaçamento interno (padding)
+Para cada <li> ou <a> dentro do <ul class="dropdown">:
+padding: 8px 24px 8px 16px;
+(isso reproduz o “respiro” oficial; 24 px à direita deixa lugar para a seta › se quiser colocar depois).
+
+4. Ícone/seta subliminar (opcional, mas vende “governo”)
+Gov.br coloca › (›) com font-size: 16px, color: #CFCFCF, float: right.
+Se você adicionar, mantenha margin-left: auto para alinhar.
+
+5. Hover / active
+Background no hover: #373737 (cinza 1 tom mais escuro).
+Transição suave:
+transition: background-color 0.15s ease-in-out;
+(NÃO use escala ou sombra – o gov.br é flat).
+Cursor: pointer (já é default, mas garanta).
+
+6. Borda e sombra
+Borda: nenhuma (flat).
+Sombra portável (copiada do inspect vivo):
+box-shadow: 0 4px 6px rgba(0,0,0,.18);
+border-radius: 0 0 4px 4px; (só cantos inferiores arredondados).
+
+7. Largura e alinhamento
+Largura mínima: 200px (para não quebrar texto).
+Max-width: 260px.
+Alinha abaixo do gatilho (left: 0 se o pai for position:relative).
+Z-index: 1050 (acima do conteúdo, abaixo do modal).
+
+8. Estado “aberto” (apenas para checar)
+Adicione classe .open via JS:
+
+css
+
+.dropdown.open { display: block; }
+(nada de opacity/scale –gov.br não anima altura).
+
+CSS mastigado – cole no seu arquivo
+css
+
+/* container do dropdown */
+.rfb-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  max-width: 260px;
+  background: #4B4B4B;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 6px rgba(0,0,0,.18);
+  z-index: 1050;
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+}
+
+/* itens */
+.rfb-dropdown li a {
+  display: block;
+  font-family: "Rawlinson", "Times New Roman", serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 1.35rem;
+  padding: 8px 24px 8px 16px;
+  text-decoration: none;
+  transition: background-color .15s ease-in-out;
+}
+
+/* hover */
+.rfb-dropdown li a:hover {
+  background-color: #373737;
+}
+
+/* setinha opcional */
+.rfb-dropdown li a::after {
+  content: "›";
+  float: right;
+  color: #CFCFCF;
+  font-size: 16px;
+}
+No HTML basta trocar a <ul> ou <div> suspenso por:
+
+html
+
+<ul class="rfb-dropdown">
+  <li><a href="#">Serviços CPF</a></li>
+  <li><a href="#">Consultar GRU</a></li>
+  <li><a href="#">Meu CPF</a></li>
+</ul>
