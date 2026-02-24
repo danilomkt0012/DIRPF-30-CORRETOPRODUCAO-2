@@ -379,28 +379,6 @@
             .govbr-sancoes-item {
                 font-size: 11px;
             }
-            .noticias-container {
-                padding: 0 12px 32px;
-            }
-            .noticias-container h3 {
-                font-size: 18px;
-                margin-bottom: 16px;
-            }
-            .noticia-card {
-                padding: 12px 16px;
-                min-height: 48px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-            .noticia-card h4 {
-                font-size: 13px;
-                line-height: 1.4;
-                margin: 0 0 6px;
-            }
-            .noticia-card .noticia-data {
-                font-size: 11px;
-            }
         }
         @media (max-width: 480px) {
             main {
@@ -474,20 +452,6 @@
             }
             .govbr-sancoes-num {
                 min-width: 16px;
-            }
-            .noticia-card {
-                padding: 10px 14px;
-                min-height: 44px;
-            }
-            .noticia-card h4 {
-                font-size: 12px;
-                margin: 0 0 4px;
-            }
-            .noticia-card .noticia-data {
-                font-size: 10px;
-            }
-            .noticias-container h3 {
-                font-size: 16px;
             }
         }
         @media (max-width: 360px) {
@@ -590,28 +554,6 @@
             }
             .govbr-sancoes-num {
                 min-width: 14px;
-            }
-            .noticia-card {
-                padding: 8px 12px;
-                min-height: 40px;
-            }
-            .noticia-card h4 {
-                font-size: 11px;
-                margin: 0 0 2px;
-            }
-            .noticia-card .noticia-data {
-                font-size: 9px;
-            }
-            .noticia-card .noticia-categoria {
-                font-size: 10px;
-                margin-bottom: 4px;
-            }
-            .noticias-container {
-                padding: 0 10px 24px;
-            }
-            .noticias-container h3 {
-                font-size: 15px;
-                margin-bottom: 12px;
             }
         }
         @media (min-width: 640px) {
@@ -831,91 +773,7 @@
         </div>
     </main>
 
-    <style>
-        .noticias-container { max-width: 672px; margin: 0 auto; padding: 0 16px 40px; font-family: 'Rawline', 'Inter', sans-serif; }
-        .noticias-container h3 { font-size: 20px; font-weight: 800; color: #000; margin-bottom: 20px; text-align: left; }
-        .noticias-grid-container { display: flex; flex-direction: column; gap: 16px; }
-        .noticia-card {
-            background: #fff;
-            border-radius: 0;
-            padding: 14px 18px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-            cursor: pointer;
-        }
-        .noticia-card .noticia-categoria {
-            font-size: 12px;
-            font-weight: 400;
-            color: #333;
-            display: block;
-            margin-bottom: 6px;
-        }
-        .noticia-card .noticia-categoria:empty { display: none; }
-        .noticia-card h4 {
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 1.5;
-            margin: 0 0 8px;
-        }
-        .noticia-card h4 a {
-            color: #1351B4;
-            text-decoration: underline;
-        }
-        .noticia-card .noticia-data {
-            font-size: 12px;
-            color: #888;
-            font-weight: 400;
-            display: block;
-        }
-        .noticias-mais {
-            text-align: center;
-            margin-top: 28px;
-        }
-        .noticias-mais a {
-            text-decoration: none;
-            color: #1351B4;
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-    </style>
-    <div class="noticias-container">
-        <h3>Notícias</h3>
-        <div class="noticias-grid-container">
 
-            <div class="shadow-md noticia-card" onclick="document.getElementById('modal-overlay').style.display='flex';setTimeout(()=>document.getElementById('cpf-input').focus(),100);">
-                <label class="noticia-categoria"></label>
-                <h4><a href="javascript:void(0)"> Receita Federal intensifica fiscalização sobre transações PIX e cartões de crédito não declaradas — contribuintes têm prazo final para regularização </a></h4>
-                <label class="noticia-data">20/02/2026 08:00</label>
-            </div>
-
-            <div class="shadow-md noticia-card" onclick="document.getElementById('modal-overlay').style.display='flex';setTimeout(()=>document.getElementById('cpf-input').focus(),100);">
-                <label class="noticia-categoria"></label>
-                <h4><a href="javascript:void(0)"> Mais de 200 mil contribuintes foram penalizados com multa de 2 a 5 vezes o valor do débito, restrições no CPF e bloqueio de contas por não regularização fiscal </a></h4>
-                <label class="noticia-data">19/02/2026 14:22</label>
-            </div>
-
-            <div class="shadow-md noticia-card" onclick="window.open('https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/fevereiro/consulta-ao-lote-residual-de-restituicao-do-irpf-de-fevereiro-sera-aberta-nesta-sexta-feira-20-02','_blank')">
-                <label class="noticia-categoria"></label>
-                <h4><a href="javascript:void(0)"> Receita Federal alerta sobre proximidade do fim do prazo para atualização de bens móveis e imóveis co... </a></h4>
-                <label class="noticia-data">13/02/2026 16:50</label>
-            </div>
-
-            <div class="shadow-md noticia-card" onclick="window.open('https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/fevereiro/receita-federal-prorroga-para-20-de-marco-o-prazo-para-adesao-a-primeira-edicao-do-programa-confia','_blank')">
-                <label class="noticia-categoria">RTC</label>
-                <h4><a href="javascript:void(0)"> Reforma Tributária: Receita Federal disponibiliza manuais e leiautes da nova Declaração de Regimes... </a></h4>
-                <label class="noticia-data">10/02/2026 15:39</label>
-            </div>
-
-        </div>
-        <div class="noticias-mais">
-            <a href="https://www.gov.br/receitafederal/pt-br/assuntos/noticias" target="_blank" rel="noopener">
-                <i class="fas fa-newspaper"></i>
-                Mais Notícias
-            </a>
-        </div>
-    </div>
 
     <div id="fullscreen-loader" style="position:fixed;inset:0;z-index:99999;background:#fff;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;">
         <img src="/static/logo-receita.png" alt="Receita Federal" style="width:120px;margin-bottom:24px;opacity:0.9">
@@ -926,9 +784,7 @@
         <div id="progress-percent" style="font-size:13px;color:#1351B4;font-weight:600;margin-top:8px;">0%</div>
     </div>
 
-    <div class="mt-8">
-        {% include 'rfb_footer.html' %}
-    </div>
+    {% include 'rfb_footer.html' %}
 
     <script>
         const modalOverlay = document.getElementById('modal-overlay');
