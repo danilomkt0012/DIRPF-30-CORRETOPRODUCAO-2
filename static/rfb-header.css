@@ -189,6 +189,72 @@
   margin-left: auto;
 }
 
+/* ===== BREADCRUMB GOV.BR ===== */
+.gov-breadcrumb-bar {
+  background: #fff;
+  padding: 0 16px;
+}
+.gov-breadcrumb-bar .gov-breadcrumb-inner {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 12px 0;
+}
+.gov-breadcrumb-bar nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-family: 'Rawline', 'Inter', sans-serif;
+  white-space: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.gov-breadcrumb-bar nav::-webkit-scrollbar {
+  display: none;
+}
+.gov-breadcrumb-bar nav a {
+  color: #1351B4;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+.gov-breadcrumb-bar nav a:hover {
+  text-decoration: underline;
+}
+.gov-breadcrumb-bar nav .breadcrumb-home {
+  color: #1351B4;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+}
+.gov-breadcrumb-bar nav .breadcrumb-sep {
+  color: #BDBDBD;
+  font-size: 9px;
+  display: inline-flex;
+  align-items: center;
+}
+.gov-breadcrumb-bar nav .breadcrumb-current {
+  color: #555D68;
+  font-weight: 400;
+}
+.gov-breadcrumb-bar + .gov-breadcrumb-divider {
+  border: none;
+  border-top: 1px solid #e1e5eb;
+  margin: 0;
+}
+@media (max-width: 480px) {
+  .gov-breadcrumb-bar { padding: 0 8px; }
+  .gov-breadcrumb-bar .gov-breadcrumb-inner { padding: 10px 0; }
+  .gov-breadcrumb-bar nav { font-size: 11px; gap: 6px; }
+  .gov-breadcrumb-bar nav .breadcrumb-home { font-size: 12px; }
+  .gov-breadcrumb-bar nav .breadcrumb-sep { font-size: 8px; }
+}
+@media (min-width: 769px) {
+  .gov-breadcrumb-bar { padding: 0 24px; }
+  .gov-breadcrumb-bar .gov-breadcrumb-inner { max-width: 1200px; }
+}
+
 /* ===== BARRA INFERIOR DO HEADER ===== */
 .rfb-header-bottom {
   display: flex;

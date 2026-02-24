@@ -629,22 +629,6 @@
                 border-radius: 12px;
             }
         }
-        .gov-breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-family: 'Inter', 'Rawline', sans-serif;
-            white-space: nowrap;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-        .gov-breadcrumb::-webkit-scrollbar { display: none; }
-        .gov-breadcrumb a { color: #1351B4; text-decoration: none; }
-        .gov-breadcrumb a:hover { text-decoration: underline; }
-        .gov-breadcrumb .sep { color: #9E9D9D; font-size: 10px; }
-        .gov-breadcrumb .current { color: #555d68; }
         @media (max-width: 640px) {
             .px-4 {
                 padding-left: 12px;
@@ -678,10 +662,8 @@
             p {
                 font-size: 13px;
             }
-            .gov-breadcrumb { font-size: 11px; }
         }
         @media (max-width: 480px) {
-            .gov-breadcrumb { font-size: 10px; }
             .py-4 {
                 padding-top: 10px;
                 padding-bottom: 10px;
@@ -726,22 +708,22 @@
     <div id="main-page" class="main-page">
         {% include 'rfb_header.html' %}
         
-        <div class="px-4" style="background:#fff;">
-            <div class="max-w-2xl mx-auto py-3">
-                <nav class="gov-breadcrumb">
-                    <a href="/"><i class="fas fa-home" style="font-size:12px;"></i></a>
-                    <span class="sep">&gt;</span>
+        <div class="gov-breadcrumb-bar">
+            <div class="gov-breadcrumb-inner">
+                <nav>
+                    <a href="/" class="breadcrumb-home"><i class="fas fa-home"></i></a>
+                    <i class="fas fa-chevron-right breadcrumb-sep"></i>
                     <a href="/">Ministério da Fazenda</a>
-                    <span class="sep">&gt;</span>
+                    <i class="fas fa-chevron-right breadcrumb-sep"></i>
                     <a href="/">Receita Federal do Brasil</a>
-                    <span class="sep">&gt;</span>
+                    <i class="fas fa-chevron-right breadcrumb-sep"></i>
                     <a href="/">e-CAC</a>
-                    <span class="sep">&gt;</span>
-                    <span class="current">Situação Cadastral CPF</span>
+                    <i class="fas fa-chevron-right breadcrumb-sep"></i>
+                    <span class="breadcrumb-current">Situação Cadastral CPF</span>
                 </nav>
             </div>
         </div>
-        <hr style="border:none;border-top:1px solid #e1e5eb;margin:0;">
+        <hr class="gov-breadcrumb-divider">
 
         <!-- Seção Dados Pessoais (Documento) -->
         <div class="px-4 py-4">

