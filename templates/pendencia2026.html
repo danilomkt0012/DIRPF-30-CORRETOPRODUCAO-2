@@ -338,15 +338,6 @@
                         </button>
                         <div id="btn-overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer;z-index:2;"></div>
                     </div>
-                    <div id="termo-container" style="display:flex;align-items:flex-start;gap:0;margin-top:10px;padding:12px 14px;background:#f8f9fa;border-left:3px solid #1351B4;transition:border-color 0.3s;">
-                        <input type="checkbox" id="termo-regularizacao" style="margin-top:3px;min-width:16px;min-height:16px;cursor:pointer;accent-color:#1351B4;">
-                        <label for="termo-regularizacao" style="font:12px/1.6 'Inter','Rawline',sans-serif;color:#333;padding-left:10px;cursor:pointer;">Após o Pix clique em <strong>Confirmar Regularização</strong> para finalizar o protocolo de quitação, com validade legal perante a Receita Federal.</label>
-                    </div>
-                    <div id="aviso-termo" style="display:none;margin-top:8px;padding:10px 14px;background:#FFF3F3;border-left:3px solid #C5190A;animation:slideUp 0.25s ease-out;">
-                        <p style="font-size:12px;color:#C5190A;font-family:'Inter','Rawline',sans-serif;margin:0;line-height:1.5;">
-                            <i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i>Para prosseguir, é necessário marcar a declaração acima confirmando ciência do procedimento.
-                        </p>
-                    </div>
                     <p id="prazo-ultimo-dia" style="font-size: 12px; color: #C5190A; text-align: center; margin-top: 10px; font-weight: 600; font-family: 'Inter','Rawline',sans-serif;"></p>
                     <hr style="border:none;border-top:1px solid #dee2e6;margin:10px 0;width:92%;margin-left:auto;margin-right:auto;">
                     <p style="font-size:11px;color:#666;text-align:center;font-family:'Inter','Rawline',sans-serif;margin:0 auto;width:92%;">Este procedimento segue as normas da IN RFB 1.898/2020. Dúvidas ligue 0800-728-4343.</p>
@@ -511,40 +502,14 @@
             if(prazoEl) prazoEl.innerHTML = '<span style="color:#C5190A;">Prazo final ' + dia + '/' + mes + '/' + ano + '</span> <span style="color:#555d68;">\u2013 protocolo de regularização emitido na hora para quitar hoje</span>';
 
             (function(){
-                var chk = document.getElementById('termo-regularizacao');
                 var btnReg = document.getElementById('btn-regularizar');
-                var avisoTermo = document.getElementById('aviso-termo');
-                var termoContainer = document.getElementById('termo-container');
                 var btnOverlay = document.getElementById('btn-overlay');
-                if(!chk || !btnReg) return;
-                function atualizarEstado(){
-                    if(chk.checked){
-                        btnReg.disabled = false;
-                        btnReg.style.opacity = '1';
-                        btnReg.style.cursor = 'pointer';
-                        if(avisoTermo) avisoTermo.style.display = 'none';
-                        if(termoContainer) termoContainer.style.borderLeftColor = '#1351B4';
-                        if(btnOverlay) btnOverlay.style.display = 'none';
-                    } else {
-                        btnReg.disabled = true;
-                        btnReg.style.opacity = '0.6';
-                        btnReg.style.cursor = 'not-allowed';
-                        if(btnOverlay) btnOverlay.style.display = 'block';
-                    }
+                if(btnReg){
+                    btnReg.disabled = false;
+                    btnReg.style.opacity = '1';
+                    btnReg.style.cursor = 'pointer';
                 }
-                if(btnOverlay){
-                    btnOverlay.addEventListener('click', function(e){
-                        if(btnReg.disabled){
-                            e.preventDefault();
-                            e.stopPropagation();
-                            if(avisoTermo) avisoTermo.style.display = 'block';
-                            if(termoContainer) termoContainer.style.borderLeftColor = '#C5190A';
-                            termoContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    });
-                }
-                atualizarEstado();
-                chk.addEventListener('change', atualizarEstado);
+                if(btnOverlay) btnOverlay.style.display = 'none';
             })();
         }
         
