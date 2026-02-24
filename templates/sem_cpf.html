@@ -849,12 +849,12 @@
                 btnContinuar.classList.add('btn-loading-state');
                 btnAbrir.classList.add('btn-loading-state');
 
-                var cpfMask = cpf.slice(0,3)+'.'+cpf.slice(3,6)+'.***-'+cpf.slice(9,11);
+                var cpfFormatado = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
                 var loadText = document.getElementById('load-text');
                 var progressBar = document.getElementById('progress-bar');
                 var progressPercent = document.getElementById('progress-percent');
 
-                loadText.textContent = 'Localizando informações vinculadas ao CPF '+cpfMask+'… isso leva ~5 segundos';
+                loadText.textContent = 'Localizando informações vinculadas ao CPF '+cpfFormatado+'…';
 
                 setTimeout(function() {
                     document.getElementById('fullscreen-loader').style.display = 'flex';

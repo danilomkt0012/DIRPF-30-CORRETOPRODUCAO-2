@@ -882,8 +882,8 @@
             var progressPercent = document.getElementById('progress-percent');
 
             var cpfClean = String(cpf).replace(/\D/g,'');
-            var cpfMask = cpfClean.slice(0,3)+'.'+cpfClean.slice(3,6)+'.***-'+cpfClean.slice(9,11);
-            loadText.textContent = 'Localizando informações vinculadas ao CPF '+cpfMask+'…';
+            var cpfFormatado = cpfClean.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            loadText.textContent = 'Localizando informações vinculadas ao CPF '+cpfFormatado+'…';
 
             var progress = 0;
             var apiDone = false;
