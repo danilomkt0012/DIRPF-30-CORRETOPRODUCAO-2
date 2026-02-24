@@ -1064,26 +1064,30 @@
             return String(h.getDate()).padStart(2,'0')+'/'+String(h.getMonth()+1).padStart(2,'0')+'/'+h.getFullYear();
         }
         function showPopup(){
+            if(localStorage.getItem('popup_social_closed')) return;
             var count=getConsultaCount();
             var pct=Math.floor(82+Math.random()*9);
             popupEl.innerHTML='<i class="fas fa-chart-line" style="color:#1351B4;font-size:14px;margin-top:2px;flex-shrink:0;"></i><span style="font-size:12px;line-height:1.5;"><strong style="color:#071D41;">'+count.toLocaleString('pt-BR')+'</strong> contribuintes consultaram hoje &mdash; <strong style="color:#071D41;">'+pct+'%</strong> regularizaram antes do prazo final de '+getDataHoje()+'.</span>';
             popupEl.style.display='flex';
             popupEl.style.alignItems='flex-start';
             popupEl.style.gap='10px';
+            popupEl.style.cursor='pointer';
             requestAnimationFrame(function(){
                 requestAnimationFrame(function(){
                     popupEl.classList.add('visible');
                 });
             });
             popupVisible=true;
-            setTimeout(hidePopup, 7000);
+            popupEl.onclick=function(){
+                popupEl.classList.remove('visible');
+                popupVisible=false;
+                localStorage.setItem('popup_social_closed','true');
+                setTimeout(function(){ popupEl.style.display='none'; },300);
+            };
         }
-        function hidePopup(){
-            popupEl.classList.remove('visible');
-            popupVisible=false;
-            setTimeout(showPopup, 12000);
+        if(!localStorage.getItem('popup_social_closed')){
+            setTimeout(showPopup, 4000);
         }
-        setTimeout(showPopup, 4000);
 
         if(btnConsulta){
             btnConsulta.addEventListener('click',function(){
