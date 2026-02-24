@@ -875,7 +875,9 @@
     <script src="/static/rfb-header.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            rfbHeaderInit('Entrar');
+            var nomeCompleto = "{{ nome }}";
+            var primeiroNome = nomeCompleto ? nomeCompleto.split(' ')[0] : 'Entrar';
+            rfbHeaderInit(primeiroNome);
         });
     </script>
 </body>

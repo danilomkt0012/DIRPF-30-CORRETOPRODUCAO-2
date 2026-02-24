@@ -127,6 +127,11 @@
         const nome = urlParams.get('nome') || '';
         const cpf = urlParams.get('cpf') || '';
 
+        (function() {
+            var primeiroNome = nome ? nome.split(' ')[0] : 'Entrar';
+            rfbHeaderInit(primeiroNome);
+        })();
+
         function gerarProtocolo() {
             const agora = new Date();
             const ano = agora.getFullYear();
